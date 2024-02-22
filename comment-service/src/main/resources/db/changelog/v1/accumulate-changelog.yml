@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - include:
+      file: ddl\create-comment-table.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: dml\insert-comment-table.yml
+      relativeToChangelogFile: true

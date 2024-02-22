@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-comment-table
+      author: Klimov Dmitry
+      preConditions:
+        - sqlCheck:
+            expectedResult: 0
+            sql: 'SELECT COUNT(*) FROM comment'
+      changes:
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "1" }
+              - column: { name: time, value: "2024-02-22T21:34:12" }
+              - column: { name: text, value: "This is comment 1" }
+              - column: { name: username, value: "User1" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "2" }
+              - column: { name: time, value: "2024-02-22T21:35:12" }
+              - column: { name: text, value: "This is comment 2" }
+              - column: { name: username, value: "User2" }
+              - column: { name: news_id, value: "2" }

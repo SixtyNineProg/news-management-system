@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: delete-house-table-is-exist
+      author: Klimov Dmitry
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: comment
+      changes:
+        - delete:
+            tableName: comment
+  - changeSet:
+      id: create-comment-table
+      author: Klimov Dmitry
+      changes:
+        - createTable:
+            tableName: comment
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: time
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
+                  type: TEXT
+              - column:
+                  name: username
+                  type: TEXT
+              - column:
+                  name: news_id
+                  type: INT

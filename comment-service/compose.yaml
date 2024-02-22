@@ -1,9 +1,29 @@
+version: "3.8"
 services:
-  postgres:
-    image: 'postgres:latest'
+  comments_db:
+    image: 'postgres:15.3'
+    container_name: comments_db
+    restart: always
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - POSTGRES_DB=Comments
+      - POSTGRES_PASSWORD=123456789
+      - POSTGRES_USER=postgres
     ports:
-      - '5432'
+      - '5432:5432'
+
+  comments:
+    image: 'comment-service-image'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: comments
+    depends_on:
+      - comments_db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://comments_db:5432/Comments
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456789
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - '8081:8080'
+
