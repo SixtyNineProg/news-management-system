@@ -11,15 +11,799 @@ databaseChangeLog:
             tableName: comment
             columns:
               - column: { name: id, value: "1" }
-              - column: { name: time, value: "2024-02-22T21:34:12" }
-              - column: { name: text, value: "This is comment 1" }
-              - column: { name: username, value: "User1" }
+              - column: { name: time, value: "2024-02-27T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
               - column: { name: news_id, value: "1" }
         - insert:
             tableName: comment
             columns:
               - column: { name: id, value: "2" }
-              - column: { name: time, value: "2024-02-22T21:35:12" }
-              - column: { name: text, value: "This is comment 2" }
-              - column: { name: username, value: "User2" }
+              - column: { name: time, value: "2024-02-28T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "3" }
+              - column: { name: time, value: "2024-02-29T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "4" }
+              - column: { name: time, value: "2024-03-01T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "5" }
+              - column: { name: time, value: "2024-03-02T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "6" }
+              - column: { name: time, value: "2024-03-03T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "7" }
+              - column: { name: time, value: "2024-03-04T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "8" }
+              - column: { name: time, value: "2024-03-05T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "9" }
+              - column: { name: time, value: "2024-03-06T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "10" }
+              - column: { name: time, value: "2024-03-07T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "1" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "11" }
+              - column: { name: time, value: "2024-03-08T01:56:14" }
+              - column: { name: text, value: "This is very insightful!" }
+              - column: { name: username, value: "John" }
               - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "12" }
+              - column: { name: time, value: "2024-03-09T01:56:14" }
+              - column: { name: text, value: "I totally agree with this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "13" }
+              - column: { name: time, value: "2024-03-10T01:56:14" }
+              - column: { name: text, value: "This is a well-written article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "14" }
+              - column: { name: time, value: "2024-03-11T01:56:14" }
+              - column: { name: text, value: "I found this very helpful." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "15" }
+              - column: { name: time, value: "2024-03-12T01:56:14" }
+              - column: { name: text, value: "This is a thought-provoking piece." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "16" }
+              - column: { name: time, value: "2024-03-13T01:56:14" }
+              - column: { name: text, value: "I appreciate the depth of this article." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "17" }
+              - column: { name: time, value: "2024-03-14T01:56:14" }
+              - column: { name: text, value: "This is a very comprehensive read." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "18" }
+              - column: { name: time, value: "2024-03-15T01:56:14" }
+              - column: { name: text, value: "I learned something new from this." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "19" }
+              - column: { name: time, value: "2024-03-16T01:56:14" }
+              - column: { name: text, value: "This is a very interesting perspective." }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "20" }
+              - column: { name: time, value: "2024-03-17T01:56:14" }
+              - column: { name: text, value: "I enjoyed reading this." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "2" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "21" }
+              - column: { name: time, value: "2024-03-18T01:56:14" }
+              - column: { name: text, value: "This article is very insightful!" }
+              - column: { name: username, value: "Michael" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "22" }
+              - column: { name: time, value: "2024-03-19T01:56:14" }
+              - column: { name: text, value: "I totally agree with the author." }
+              - column: { name: username, value: "Sarah" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "23" }
+              - column: { name: time, value: "2024-03-20T01:56:14" }
+              - column: { name: text, value: "This article is well-written." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "24" }
+              - column: { name: time, value: "2024-03-21T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this information." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "25" }
+              - column: { name: time, value: "2024-03-22T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this article." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "26" }
+              - column: { name: time, value: "2024-03-23T01:56:14" }
+              - column: { name: text, value: "Good to know about this." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "27" }
+              - column: { name: time, value: "2024-03-24T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "28" }
+              - column: { name: time, value: "2024-03-25T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "29" }
+              - column: { name: time, value: "2024-03-26T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "30" }
+              - column: { name: time, value: "2024-03-27T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "3" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "31" }
+              - column: { name: time, value: "2024-03-28T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "32" }
+              - column: { name: time, value: "2024-03-29T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "33" }
+              - column: { name: time, value: "2024-03-30T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "34" }
+              - column: { name: time, value: "2024-03-31T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "35" }
+              - column: { name: time, value: "2024-04-01T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "36" }
+              - column: { name: time, value: "2024-04-02T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "37" }
+              - column: { name: time, value: "2024-04-03T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "38" }
+              - column: { name: time, value: "2024-04-04T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "39" }
+              - column: { name: time, value: "2024-04-05T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "40" }
+              - column: { name: time, value: "2024-04-06T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "4" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "41" }
+              - column: { name: time, value: "2024-04-07T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "42" }
+              - column: { name: time, value: "2024-04-08T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "43" }
+              - column: { name: time, value: "2024-04-09T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "44" }
+              - column: { name: time, value: "2024-04-10T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "45" }
+              - column: { name: time, value: "2024-04-11T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "46" }
+              - column: { name: time, value: "2024-04-12T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "47" }
+              - column: { name: time, value: "2024-04-13T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "48" }
+              - column: { name: time, value: "2024-04-14T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "49" }
+              - column: { name: time, value: "2024-04-15T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "50" }
+              - column: { name: time, value: "2024-04-16T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "5" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "51" }
+              - column: { name: time, value: "2024-04-17T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "52" }
+              - column: { name: time, value: "2024-04-18T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "53" }
+              - column: { name: time, value: "2024-04-19T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "54" }
+              - column: { name: time, value: "2024-04-20T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "55" }
+              - column: { name: time, value: "2024-04-21T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "56" }
+              - column: { name: time, value: "2024-04-22T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "57" }
+              - column: { name: time, value: "2024-04-23T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "58" }
+              - column: { name: time, value: "2024-04-24T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "59" }
+              - column: { name: time, value: "2024-04-25T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "60" }
+              - column: { name: time, value: "2024-04-26T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "6" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "61" }
+              - column: { name: time, value: "2024-04-27T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "62" }
+              - column: { name: time, value: "2024-04-28T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "63" }
+              - column: { name: time, value: "2024-04-29T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "64" }
+              - column: { name: time, value: "2024-04-30T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "65" }
+              - column: { name: time, value: "2024-05-01T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "66" }
+              - column: { name: time, value: "2024-05-02T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "67" }
+              - column: { name: time, value: "2024-05-03T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "68" }
+              - column: { name: time, value: "2024-05-04T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "69" }
+              - column: { name: time, value: "2024-05-05T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "70" }
+              - column: { name: time, value: "2024-05-06T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "7" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "71" }
+              - column: { name: time, value: "2024-05-07T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "72" }
+              - column: { name: time, value: "2024-05-08T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "73" }
+              - column: { name: time, value: "2024-05-09T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "74" }
+              - column: { name: time, value: "2024-05-10T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "75" }
+              - column: { name: time, value: "2024-05-11T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "76" }
+              - column: { name: time, value: "2024-05-12T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "77" }
+              - column: { name: time, value: "2024-05-13T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "78" }
+              - column: { name: time, value: "2024-05-14T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "79" }
+              - column: { name: time, value: "2024-05-15T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "80" }
+              - column: { name: time, value: "2024-05-16T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "8" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "81" }
+              - column: { name: time, value: "2024-05-17T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "82" }
+              - column: { name: time, value: "2024-05-18T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "83" }
+              - column: { name: time, value: "2024-05-19T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "84" }
+              - column: { name: time, value: "2024-05-20T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "85" }
+              - column: { name: time, value: "2024-05-21T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "86" }
+              - column: { name: time, value: "2024-05-22T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "87" }
+              - column: { name: time, value: "2024-05-23T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "88" }
+              - column: { name: time, value: "2024-05-24T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "89" }
+              - column: { name: time, value: "2024-05-25T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "90" }
+              - column: { name: time, value: "2024-05-26T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "9" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "91" }
+              - column: { name: time, value: "2024-05-27T01:56:14" }
+              - column: { name: text, value: "This is a great news!" }
+              - column: { name: username, value: "John" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "92" }
+              - column: { name: time, value: "2024-05-28T01:56:14" }
+              - column: { name: text, value: "I am so excited about this." }
+              - column: { name: username, value: "Jane" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "93" }
+              - column: { name: time, value: "2024-05-29T01:56:14" }
+              - column: { name: text, value: "Interesting article." }
+              - column: { name: username, value: "Robert" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "94" }
+              - column: { name: time, value: "2024-05-30T01:56:14" }
+              - column: { name: text, value: "Thanks for sharing this." }
+              - column: { name: username, value: "Emma" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "95" }
+              - column: { name: time, value: "2024-05-31T01:56:14" }
+              - column: { name: text, value: "I learned a lot from this." }
+              - column: { name: username, value: "Oliver" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "96" }
+              - column: { name: time, value: "2024-06-01T01:56:14" }
+              - column: { name: text, value: "Good to know." }
+              - column: { name: username, value: "Sophia" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "97" }
+              - column: { name: time, value: "2024-06-02T01:56:14" }
+              - column: { name: text, value: "This is very informative." }
+              - column: { name: username, value: "William" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "98" }
+              - column: { name: time, value: "2024-06-03T01:56:14" }
+              - column: { name: text, value: "I appreciate this post." }
+              - column: { name: username, value: "Ava" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "99" }
+              - column: { name: time, value: "2024-06-04T01:56:14" }
+              - column: { name: text, value: "Great read!" }
+              - column: { name: username, value: "James" }
+              - column: { name: news_id, value: "10" }
+        - insert:
+            tableName: comment
+            columns:
+              - column: { name: id, value: "100" }
+              - column: { name: time, value: "2024-06-05T01:56:14" }
+              - column: { name: text, value: "Could be better." }
+              - column: { name: username, value: "Mia" }
+              - column: { name: news_id, value: "10" }
