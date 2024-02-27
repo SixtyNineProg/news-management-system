@@ -1,17 +1,13 @@
 package by.klimov.commentservice.controller;
 
-import static by.klimov.commentservice.util.Constants.MAX_PAGE_SIZE_LIMIT;
-import static by.klimov.commentservice.util.Constants.MIN_PAGE_SIZE_LIMIT;
-import static by.klimov.commentservice.util.Constants.PAGE_SIZE_LIMIT;
-
 import by.klimov.commentservice.dto.CommentDto;
 import by.klimov.commentservice.exception.NotFoundException;
 import by.klimov.commentservice.service.CommentService;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +30,20 @@ public class CommentController {
 
   @GetMapping
   public ResponseEntity<Object> get(
-      @RequestParam @Min(0) Integer offset,
-      @RequestParam(defaultValue = PAGE_SIZE_LIMIT)
-          @Min(MIN_PAGE_SIZE_LIMIT)
-          @Max(MAX_PAGE_SIZE_LIMIT)
-          Integer limit) {
-    Page<CommentDto> commentDtoPage = commentService.readAll(offset, limit);
+      @RequestParam(name = "page_number") Integer pageNumber,
+      @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
+    Page<CommentDto> commentDtoPage = commentService.readAll(PageRequest.of(pageNumber, pageSize));
     return ResponseEntity.ok(commentDtoPage);
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<Object> search(
+      @RequestParam String text,
+      @RequestParam List<String> fields,
+      @RequestParam(name = "page_number") Integer pageNumber,
+      @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
+    return ResponseEntity.ok(
+        commentService.search(text, fields, PageRequest.of(pageNumber, pageSize)));
   }
 
   @GetMapping("/{id}")

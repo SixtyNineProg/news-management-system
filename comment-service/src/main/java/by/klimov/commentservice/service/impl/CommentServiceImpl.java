@@ -6,6 +6,8 @@ import by.klimov.commentservice.exception.NotFoundException;
 import by.klimov.commentservice.mapper.CommentMapper;
 import by.klimov.commentservice.repository.CommentRepository;
 import by.klimov.commentservice.service.CommentService;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentServiceImpl implements CommentService {
 
   public static final String ERROR_FORMAT_NOT_FOUND = "Comment with uuid = %s not found";
+
+  private static final List<String> SEARCHABLE_FIELDS = Arrays.asList("text", "userName");
 
   private final CommentRepository commentRepository;
   private final CommentMapper commentMapper;
@@ -59,8 +63,23 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public Page<CommentDto> readAll(Integer offset, Integer limit) {
-    Page<Comment> commentPage = commentRepository.findAll(PageRequest.of(offset, limit));
+  public Page<CommentDto> readAll(PageRequest pageRequest) {
+    Page<Comment> commentPage = commentRepository.findAll(pageRequest);
+    return commentPage.map(commentMapper::toCommentDto);
+  }
+
+  @Override
+  public Page<CommentDto> search(String text, List<String> fields, PageRequest pageRequest) {
+    List<String> fieldsToSearchBy = fields.isEmpty() ? SEARCHABLE_FIELDS : fields;
+
+    boolean containsInvalidField =
+        fieldsToSearchBy.stream().anyMatch(f -> !SEARCHABLE_FIELDS.contains(f));
+
+    if (containsInvalidField) {
+      throw new IllegalArgumentException();
+    }
+    Page<Comment> commentPage =
+        commentRepository.searchBy(text, pageRequest, fieldsToSearchBy.toArray(new String[0]));
     return commentPage.map(commentMapper::toCommentDto);
   }
 }

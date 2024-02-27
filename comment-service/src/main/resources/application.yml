@@ -18,6 +18,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        search:
+          backend:
+            type: lucene
+            directory.root: ./data/index
 
   liquibase:
     change-log: classpath:/db/changelog/main-changelog.yml
