@@ -35,3 +35,7 @@ logging:
     root: DEBUG
     org.springframework.web: INFO
     org.hibernate: ERROR
+
+cache:
+  type: LRU
+  capacity: 10

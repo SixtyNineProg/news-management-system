@@ -47,7 +47,7 @@ public class CommentController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Object> getHouseById(@PathVariable Integer id) {
+  public ResponseEntity<Object> getById(@PathVariable Integer id) {
     Optional<CommentDto> commentDto = commentService.readById(id);
     return ResponseEntity.ok(
         commentDto.orElseThrow(() -> new NotFoundException("Comment not found")));
@@ -62,7 +62,7 @@ public class CommentController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Object> deleteByUuid(@PathVariable Integer id) {
-    commentService.deleteByUuid(id);
+    commentService.deleteById(id);
     return ResponseEntity.ok(id);
   }
 }
