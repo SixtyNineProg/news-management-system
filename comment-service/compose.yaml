@@ -6,8 +6,8 @@ services:
     restart: always
     environment:
       - POSTGRES_DB=Comments
-      - POSTGRES_PASSWORD=123456789
       - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456789
     ports:
       - '5432:5432'
 
