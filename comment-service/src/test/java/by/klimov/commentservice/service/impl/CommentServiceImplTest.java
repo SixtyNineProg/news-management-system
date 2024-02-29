@@ -18,7 +18,6 @@ import by.klimov.commentservice.entity.Comment;
 import by.klimov.commentservice.exception.NotFoundException;
 import by.klimov.commentservice.mapper.CommentMapper;
 import by.klimov.commentservice.repository.CommentRepository;
-import by.klimov.commentservice.service.CommentService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -35,10 +34,8 @@ class CommentServiceImplTest {
   @MockBean private final CommentRepository commentRepository;
 
   @MockBean private final CommentMapper commentMapper;
-
-  @Captor private ArgumentCaptor<Comment> commentArgumentCaptor;
-
   private final CommentServiceImpl commentService;
+  @Captor private ArgumentCaptor<Comment> commentArgumentCaptor;
 
   @Test
   void create_whenCreateComment_thenCommentExpected() {
@@ -208,7 +205,6 @@ class CommentServiceImplTest {
   @Test
   void search_whenSearchByInvalidField_thenNotFoundExceptionExpected() {
     // given
-    Integer id = CommentTestData.builder().build().buildCommentDto().id();
 
     // when
     assertThrows(

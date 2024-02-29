@@ -1,62 +1,53 @@
 package by.klimov.commentservice.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import by.klimov.commentservice.data.CommentTestData;
-import by.klimov.commentservice.dto.CommentDto;
-import by.klimov.commentservice.lucene.Indexer;
+import by.klimov.commentservice.container.PostgresSqlContainerInitializer;
 import by.klimov.commentservice.service.impl.CommentServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-@WebMvcTest
+@AutoConfigureDataJpa
 @RequiredArgsConstructor
-class CommentControllerTest {
+@WebMvcTest(CommentController.class)
+class CommentControllerTest extends PostgresSqlContainerInitializer {
 
   public static final String BASE_REQUEST_MAPPING = "/comments";
 
-  private final MockMvc mockMvc;
+  @Autowired private final MockMvc mockMvc;
 
   @MockBean private final CommentServiceImpl commentService;
 
-  @MockBean private final Indexer indexer;
-
   private final ObjectMapper objectMapper = initObjectMapper();
 
-//  @SneakyThrows
+  //  @SneakyThrows
   @Test
-  void getById_whenGetById_thenValidAnswerCodeAndPathAndAnswerExpected() {
-//    // given
-//    CommentTestData commentTestData = CommentTestData.builder().build();
-//    CommentDto expected = commentTestData.buildCommentDto();
-//    Optional<CommentDto> optionalCommentDto = Optional.of(commentTestData.buildCommentDto());
-//    Integer id = expected.id();
-//
-//    doReturn(optionalCommentDto).when(commentService).readById(id);
-//
-//    // when
-//    MvcResult mvcResult =
-//        mockMvc
-//            .perform(get(BASE_REQUEST_MAPPING + "/" + id))
-//            .andExpectAll(status().is2xxSuccessful(), jsonPath("$.id").value(id.toString()))
-//            .andReturn();
-//    String jsonAnswerCreate = mvcResult.getResponse().getContentAsString();
-//    CommentDto actual = objectMapper.readValue(jsonAnswerCreate, CommentDto.class);
-//
-//    // then
-//    assertThat(actual).isEqualTo(expected);
-  }
+  void getById_whenGetById_thenValidAnswerCodeAndPathAndAnswerExpected() {}
+
+  //    // given
+  //    CommentTestData commentTestData = CommentTestData.builder().build();
+  //    CommentDto expected = commentTestData.buildCommentDto();
+  //    Optional<CommentDto> optionalCommentDto = Optional.of(commentTestData.buildCommentDto());
+  //    Integer id = expected.id();
+  //
+  //    doReturn(optionalCommentDto).when(commentService).readById(id);
+  //
+  //    // when
+  //    MvcResult mvcResult =
+  //        mockMvc
+  //            .perform(get(BASE_REQUEST_MAPPING + "/" + id))
+  //            .andExpectAll(status().is2xxSuccessful(), jsonPath("$.id").value(id.toString()))
+  //            .andReturn();
+  //    String jsonAnswerCreate = mvcResult.getResponse().getContentAsString();
+  //    CommentDto actual = objectMapper.readValue(jsonAnswerCreate, CommentDto.class);
+  //
+  //    // then
+  //    assertThat(actual).isEqualTo(expected);
+  //  }
 
   //
   //  @SneakyThrows
