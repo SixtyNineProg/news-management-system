@@ -31,9 +31,7 @@ public class Comment {
   @CreationTimestamp(source = SourceType.DB)
   private Timestamp time;
 
-  @NotBlank
-  @FullTextField
-  private String text;
+  @NotBlank @FullTextField private String text;
 
   @NotBlank
   @FullTextField

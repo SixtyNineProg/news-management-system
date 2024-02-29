@@ -19,13 +19,13 @@ public class CommentServiceApplication {
   }
 
   @Bean
-  public ApplicationRunner buildIndex(Indexer indexer) {
-    return (ApplicationArguments args) ->
-        indexer.indexPersistedData("by.klimov.commentservice.entity.Comment");
+  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
   }
 
   @Bean
-  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-    return new PropertySourcesPlaceholderConfigurer();
+  public ApplicationRunner buildIndex(Indexer indexer) {
+    return (ApplicationArguments args) ->
+        indexer.indexPersistedData("by.klimov.commentservice.entity.Comment");
   }
 }

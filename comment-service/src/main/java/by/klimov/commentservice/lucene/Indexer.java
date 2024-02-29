@@ -12,9 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class Indexer {
 
-  private final EntityManager entityManager;
-
   private static final int THREAD_NUMBER = 4;
+  private final EntityManager entityManager;
 
   public Indexer(EntityManager entityManager) {
     this.entityManager = entityManager;
