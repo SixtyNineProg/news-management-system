@@ -29,6 +29,14 @@ public class CommentServiceImpl implements CommentService {
     this.commentMapper = CommentMapper.INSTANCE;
   }
 
+  /**
+   * This method is used to create a new comment.
+   *
+   * @param commentDto An instance of CommentDto which contains the data of the comment to be
+   *     created.
+   * @return CommentDto Returns the created comment as an instance of CommentDto.
+   * @throws IllegalArgumentException If the provided CommentDto is null.
+   */
   @Override
   public CommentDto create(CommentDto commentDto) {
     Comment comment = commentMapper.toComment(commentDto);
@@ -36,12 +44,27 @@ public class CommentServiceImpl implements CommentService {
     return commentMapper.toCommentDto(repositoryComment);
   }
 
+  /**
+   * This method is used to read a comment by its ID.
+   *
+   * @param id The ID of the comment to be read.
+   * @return Optional<CommentDto> Returns an Optional that contains the CommentDto if found, or an
+   *     empty Optional if not.
+   * @throws IllegalArgumentException If the provided ID is null.
+   */
   @Override
   public Optional<CommentDto> readById(Integer id) {
     Optional<Comment> optionalComment = commentRepository.findById(id);
     return optionalComment.map(commentMapper::toCommentDto);
   }
 
+  /**
+   * This method is used to update a comment.
+   *
+   * @param commentDto An instance of CommentDto which contains the updated data of the comment.
+   * @return CommentDto Returns the updated comment as an instance of CommentDto.
+   * @throws NotFoundException If the comment with the provided ID is not found.
+   */
   @Override
   public CommentDto update(CommentDto commentDto) {
     Optional<Comment> optionalComment = commentRepository.findById(commentDto.id());
@@ -52,6 +75,12 @@ public class CommentServiceImpl implements CommentService {
     return commentMapper.toCommentDto(commentRepository.save(comment));
   }
 
+  /**
+   * This method is used to delete a comment by its ID.
+   *
+   * @param id The ID of the comment to be deleted.
+   * @throws NotFoundException If the comment with the provided ID is not found.
+   */
   @Override
   public void deleteById(Integer id) {
     Optional<Comment> optionalComment = commentRepository.findById(id);
@@ -61,12 +90,30 @@ public class CommentServiceImpl implements CommentService {
     commentRepository.delete(comment);
   }
 
+  /**
+   * This method is used to read all comments with pagination.
+   *
+   * @param pageRequest An instance of PageRequest which contains the pagination information.
+   * @return Page<CommentDto> Returns a page of CommentDto instances.
+   * @throws IllegalArgumentException If the provided PageRequest is null.
+   */
   @Override
   public Page<CommentDto> readAll(PageRequest pageRequest) {
     Page<Comment> commentPage = commentRepository.findAll(pageRequest);
     return commentPage.map(commentMapper::toCommentDto);
   }
 
+  /**
+   * This method is used to search for comments based on a text and a list of fields.
+   *
+   * @param text The text to be searched in the comments.
+   * @param fields The fields in the Comment class to be searched. If this list is empty, all fields
+   *     annotated with FullTextField in the Comment class will be searched.
+   * @param pageRequest An instance of PageRequest which contains the pagination information.
+   * @return Page<CommentDto> Returns a page of CommentDto instances that match the search criteria.
+   * @throws IllegalArgumentException If any of the provided fields is not a field of the Comment
+   *     class annotated with FullTextField.
+   */
   @Override
   public Page<CommentDto> search(String text, List<String> fields, PageRequest pageRequest) {
     List<String> searchableFields =

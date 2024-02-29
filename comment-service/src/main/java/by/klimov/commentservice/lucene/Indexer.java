@@ -2,22 +2,21 @@ package by.klimov.commentservice.lucene;
 
 import by.klimov.commentservice.exception.IndexException;
 import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.massindexing.MassIndexer;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+
 @Component
+@Transactional
+@RequiredArgsConstructor
 public class Indexer {
 
   private static final int THREAD_NUMBER = 4;
   private final EntityManager entityManager;
-
-  public Indexer(EntityManager entityManager) {
-    this.entityManager = entityManager;
-  }
 
   public void indexPersistedData(String indexClassName) throws IndexException {
     try {

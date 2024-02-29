@@ -18,6 +18,7 @@ import by.klimov.commentservice.entity.Comment;
 import by.klimov.commentservice.exception.NotFoundException;
 import by.klimov.commentservice.mapper.CommentMapper;
 import by.klimov.commentservice.repository.CommentRepository;
+import by.klimov.commentservice.service.CommentService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 
-@SpringBootTest
 @RequiredArgsConstructor
+@SpringBootTest(classes = CommentServiceImpl.class)
 class CommentServiceImplTest {
 
   @MockBean private final CommentRepository commentRepository;
@@ -110,7 +111,7 @@ class CommentServiceImplTest {
   }
 
   @Test
-  void update_whenUpdateCommentDtoWithUnknownUuid_thenNotFoundExceptionExpected() {
+  void update_whenUpdateCommentDtoWithUnknownId_thenNotFoundExceptionExpected() {
     // given
     CommentDto expected = CommentTestData.builder().build().buildCommentDto();
 
@@ -125,7 +126,7 @@ class CommentServiceImplTest {
   }
 
   @Test
-  void deleteByUuid_whenDeleteByUuid_thenCallRepositoryDeleteWithExpectedObject() {
+  void deleteById_whenDeleteById_thenCallRepositoryDeleteWithExpectedObject() {
     // given
     Integer id = CommentTestData.builder().build().buildCommentDto().id();
     Comment comment = CommentTestData.builder().build().buildComment();
@@ -149,7 +150,7 @@ class CommentServiceImplTest {
   }
 
   @Test
-  void deleteByUuid_whenDeleteByUuidWithUnknownUuid_thenNotFoundExceptionExpected() {
+  void deleteById_whenDeleteByIdWithUnknownId_thenNotFoundExceptionExpected() {
     // given
     Integer id = CommentTestData.builder().build().buildCommentDto().id();
 
