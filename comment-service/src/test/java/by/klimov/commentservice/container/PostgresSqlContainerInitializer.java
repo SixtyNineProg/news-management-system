@@ -15,7 +15,7 @@ public abstract class PostgresSqlContainerInitializer {
 
   @Container
   private static final PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>(DockerImageName.parse("postgres:13.3"));
+      new PostgreSQLContainer<>(DockerImageName.parse("postgres:15.3"));
 
   @BeforeAll
   static void startContainer() {

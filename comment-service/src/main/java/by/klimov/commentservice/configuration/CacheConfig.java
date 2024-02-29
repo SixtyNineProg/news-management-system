@@ -7,10 +7,8 @@ import by.klimov.commentservice.entity.Comment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
-@EnableAspectJAutoProxy
 public class CacheConfig {
 
   @Value("${cache.type}")
