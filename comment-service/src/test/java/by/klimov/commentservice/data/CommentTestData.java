@@ -2,6 +2,8 @@ package by.klimov.commentservice.data;
 
 import by.klimov.commentservice.dto.CommentDto;
 import by.klimov.commentservice.entity.Comment;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -19,6 +21,9 @@ import org.springframework.data.domain.PageRequest;
 public class CommentTestData {
 
   public static final long TEST_MILLIS = 1705953644075L;
+
+  public static final String PARAM_NAME_PAGE_NUMBER = "page_number";
+  public static final String PARAM_NAME_PAGE_SIZE = "page_size";
   public static final Integer PAGE_NUMBER = 1;
   public static final Integer PAGE_SIZE = 4;
   public static final long TOTAL = 5;
@@ -41,6 +46,8 @@ public class CommentTestData {
   @Builder.Default private String userName = "Jane";
 
   @Builder.Default private Integer newsId = 1;
+
+  private final ObjectMapper objectMapper = initObjectMapper();
 
   @Builder.Default
   private LocalDateTime timeLocalDateTime =
@@ -76,5 +83,15 @@ public class CommentTestData {
 
   public Page<Comment> buildCommentPage() {
     return new PageImpl<>(buildComments(), PAGE_REQUEST, TOTAL);
+  }
+
+  public String buildJsonCommentDto() throws JsonProcessingException {
+    return objectMapper.writeValueAsString(buildCommentDto());
+  }
+
+  private ObjectMapper initObjectMapper() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.findAndRegisterModules();
+    return objectMapper;
   }
 }
