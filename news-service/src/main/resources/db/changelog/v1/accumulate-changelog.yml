@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - include:
+      file: ddl\create-news-table.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: dml\insert-news-table.yml
+      relativeToChangelogFile: true
