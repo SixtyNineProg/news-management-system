@@ -30,7 +30,7 @@ public class CommentController {
   }
 
   @GetMapping
-  public ResponseEntity<Object> get(
+  public ResponseEntity<Object> getAll(
       @RequestParam(name = "page_number") Integer pageNumber,
       @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
     Page<CommentDto> commentDtoPage = commentService.readAll(PageRequest.of(pageNumber, pageSize));
@@ -38,13 +38,19 @@ public class CommentController {
   }
 
   @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> getByNewsId(
+  public ResponseEntity<Object> getAllByWithFilter(
       @RequestParam(name = "page_number") Integer pageNumber,
       @RequestParam(name = "page_size", defaultValue = "15", required = false) Integer pageSize,
       @RequestBody CommentsFilter commentsFilter) {
     Page<CommentDto> commentDtoPage =
         commentService.readAllWithFilter(commentsFilter, PageRequest.of(pageNumber, pageSize));
     return ResponseEntity.ok(commentDtoPage);
+  }
+
+  @PostMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Void> deleteAllWithFilter(@RequestBody CommentsFilter commentsFilter) {
+    commentService.deleteAllWithFilter(commentsFilter);
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/search")

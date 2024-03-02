@@ -13,4 +13,6 @@ public interface CommentService extends CrudService<CommentDto, Integer> {
   Page<CommentDto> search(String text, List<String> fields, PageRequest pageRequest);
 
   Page<CommentDto> readAllWithFilter(CommentsFilter commentsFilter, PageRequest pageRequest);
+
+  void deleteAllWithFilter(CommentsFilter commentsFilter);
 }
