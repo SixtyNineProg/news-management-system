@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: delete-house-table-is-exist
+      id: delete-comment-table-is-exist
       author: Klimov Dmitry
       preConditions:
         - onFail: MARK_RAN
