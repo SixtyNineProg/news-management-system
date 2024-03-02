@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CommentServiceImpl implements CommentService {
 
-  public static final String ERROR_FORMAT_NOT_FOUND = "Comment with uuid = %s not found";
+  public static final String ERROR_FORMAT_NOT_FOUND = "Comment with id = %s not found";
 
   private final CommentRepository commentRepository;
   private final CommentMapper commentMapper;
