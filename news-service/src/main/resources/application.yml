@@ -1,0 +1,57 @@
+spring:
+  application.name: news-service
+  profiles.active: dev
+  jackson:
+    date-format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    serialization:
+      write_dates_as_timestamps: false
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        search:
+          backend:
+            type: lucene
+            directory.root: ./data/index
+
+  liquibase:
+    change-log: classpath:/db/changelog/main-changelog.yml
+
+server:
+  port: 8082
+  servlet.context-path: /v1
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: ERROR
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: "jdbc:postgresql://localhost:5433/News"
+    username: "postgres"
+    password: "123456789"
+    driver-class-name: org.postgresql.Driver
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: "jdbc:postgresql://prod:5432/News"
+    username: "prod_user"
+    password: "prod_password"
+    driver-class-name: org.postgresql.Driver
