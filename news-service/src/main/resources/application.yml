@@ -21,7 +21,7 @@ spring:
     change-log: classpath:/db/changelog/main-changelog.yml
 
 server:
-  port: 8082
+  port: 8080
   servlet.context-path: /v1
 
 logging:
@@ -51,7 +51,7 @@ spring:
       on-profile: prod
 
   datasource:
-    url: "jdbc:postgresql://prod:5432/News"
+    url: "jdbc:postgresql://prod:5433/News"
     username: "prod_user"
     password: "prod_password"
     driver-class-name: org.postgresql.Driver
