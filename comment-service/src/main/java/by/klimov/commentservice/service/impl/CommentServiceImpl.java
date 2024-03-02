@@ -4,14 +4,17 @@ import by.klimov.commentservice.dto.CommentDto;
 import by.klimov.commentservice.entity.Comment;
 import by.klimov.commentservice.exception.NotFoundException;
 import by.klimov.commentservice.mapper.CommentMapper;
+import by.klimov.commentservice.model.CommentsFilter;
 import by.klimov.commentservice.repository.CommentRepository;
 import by.klimov.commentservice.service.CommentService;
+import by.klimov.commentservice.specification.CommentSpecification;
 import by.klimov.commentservice.util.ReflectionUtil;
 import java.util.List;
 import java.util.Optional;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
    * @param commentDto An instance of CommentDto which contains the data of the comment to be
    *     created.
    * @return CommentDto Returns the created comment as an instance of CommentDto.
-   * @throws IllegalArgumentException If the provided CommentDto is null.
+   * @throws IllegalArgumentException If the provided CommentDto is null. {@code @override}
    */
   @Override
   public CommentDto create(CommentDto commentDto) {
@@ -50,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
    * @param id The ID of the comment to be read.
    * @return Optional<CommentDto> Returns an Optional that contains the CommentDto if found, or an
    *     empty Optional if not.
-   * @throws IllegalArgumentException If the provided ID is null.
+   * @throws IllegalArgumentException If the provided ID is null. {@code @override}
    */
   @Override
   public Optional<CommentDto> readById(Integer id) {
@@ -63,7 +66,7 @@ public class CommentServiceImpl implements CommentService {
    *
    * @param commentDto An instance of CommentDto which contains the updated data of the comment.
    * @return CommentDto Returns the updated comment as an instance of CommentDto.
-   * @throws NotFoundException If the comment with the provided ID is not found.
+   * @throws NotFoundException If the comment with the provided ID is not found. {@code @override}
    */
   @Override
   public CommentDto update(CommentDto commentDto) {
@@ -79,7 +82,7 @@ public class CommentServiceImpl implements CommentService {
    * This method is used to delete a comment by its ID.
    *
    * @param id The ID of the comment to be deleted.
-   * @throws NotFoundException If the comment with the provided ID is not found.
+   * @throws NotFoundException If the comment with the provided ID is not found. {@code @override}
    */
   @Override
   public void deleteById(Integer id) {
@@ -95,7 +98,7 @@ public class CommentServiceImpl implements CommentService {
    *
    * @param pageRequest An instance of PageRequest which contains the pagination information.
    * @return Page<CommentDto> Returns a page of CommentDto instances.
-   * @throws IllegalArgumentException If the provided PageRequest is null.
+   * @throws IllegalArgumentException If the provided PageRequest is null. {@code @override}
    */
   @Override
   public Page<CommentDto> readAll(PageRequest pageRequest) {
@@ -112,7 +115,7 @@ public class CommentServiceImpl implements CommentService {
    * @param pageRequest An instance of PageRequest which contains the pagination information.
    * @return Page<CommentDto> Returns a page of CommentDto instances that match the search criteria.
    * @throws IllegalArgumentException If any of the provided fields is not a field of the Comment
-   *     class annotated with FullTextField.
+   *     class annotated with FullTextField. {@code @override}
    */
   @Override
   public Page<CommentDto> search(String text, List<String> fields, PageRequest pageRequest) {
@@ -131,5 +134,20 @@ public class CommentServiceImpl implements CommentService {
     Page<Comment> commentPage =
         commentRepository.searchBy(text, pageRequest, fieldsToSearchBy.toArray(new String[0]));
     return commentPage.map(commentMapper::toCommentDto);
+  }
+
+  /**
+   * This method reads all comments that match the provided filter.
+   *
+   * @param commentsFilter The filter to apply when reading comments.
+   * @param pageRequest The pagination information.
+   * @return A page of CommentDto objects that match the filter. {@code @override}
+   */
+  @Override
+  public Page<CommentDto> readAllWithFilter(
+      CommentsFilter commentsFilter, PageRequest pageRequest) {
+    Specification<Comment> spec = CommentSpecification.matchesFilter(commentsFilter);
+    Page<Comment> comments = commentRepository.findAll(spec, pageRequest);
+    return comments.map(commentMapper::toCommentDto);
   }
 }

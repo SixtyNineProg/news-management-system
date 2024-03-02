@@ -2,6 +2,7 @@ package by.klimov.commentservice.controller;
 
 import by.klimov.commentservice.dto.CommentDto;
 import by.klimov.commentservice.exception.NotFoundException;
+import by.klimov.commentservice.model.CommentsFilter;
 import by.klimov.commentservice.service.CommentService;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,16 @@ public class CommentController {
       @RequestParam(name = "page_number") Integer pageNumber,
       @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
     Page<CommentDto> commentDtoPage = commentService.readAll(PageRequest.of(pageNumber, pageSize));
+    return ResponseEntity.ok(commentDtoPage);
+  }
+
+  @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Object> getByNewsId(
+      @RequestParam(name = "page_number") Integer pageNumber,
+      @RequestParam(name = "page_size", defaultValue = "15", required = false) Integer pageSize,
+      @RequestBody CommentsFilter commentsFilter) {
+    Page<CommentDto> commentDtoPage =
+        commentService.readAllWithFilter(commentsFilter, PageRequest.of(pageNumber, pageSize));
     return ResponseEntity.ok(commentDtoPage);
   }
 
