@@ -105,6 +105,10 @@ public class CommentTestData {
     return new CommentsFilter(id);
   }
 
+  public String buildJsonCommentFilterForId() throws JsonProcessingException {
+    return objectMapper.writeValueAsString(buildCommentFilterForId());
+  }
+
   public Specification<Comment> buildCommentSpecificationForId() {
     return new CommentSpecification().matchesFilter(buildCommentFilterForId());
   }
