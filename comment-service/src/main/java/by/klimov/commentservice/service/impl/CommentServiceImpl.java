@@ -153,8 +153,8 @@ public class CommentServiceImpl implements CommentService {
   @Override
   public Page<CommentDto> readAllWithFilter(
       CommentsFilter commentsFilter, PageRequest pageRequest) {
-    Specification<Comment> spec = CommentSpecification.matchesFilter(commentsFilter);
-    Page<Comment> comments = commentRepository.findAll(spec, pageRequest);
+    Specification<Comment> specification = CommentSpecification.matchesFilter(commentsFilter);
+    Page<Comment> comments = commentRepository.findAll(specification, pageRequest);
     return comments.map(commentMapper::toCommentDto);
   }
 
@@ -166,8 +166,8 @@ public class CommentServiceImpl implements CommentService {
    */
   @Override
   public void deleteAllWithFilter(CommentsFilter commentsFilter) {
-    Specification<Comment> spec = CommentSpecification.matchesFilter(commentsFilter);
-    List<Comment> comments = commentRepository.findAll(spec);
+    Specification<Comment> specification = CommentSpecification.matchesFilter(commentsFilter);
+    List<Comment> comments = commentRepository.findAll(specification);
     commentRepository.deleteAll(comments);
   }
 }
