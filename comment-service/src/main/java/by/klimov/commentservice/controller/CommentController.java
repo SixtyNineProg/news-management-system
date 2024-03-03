@@ -24,13 +24,13 @@ public class CommentController {
   @PostMapping(
       consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
-  public ResponseEntity<Object> save(@RequestBody CommentDto commentDto) {
+  public ResponseEntity<CommentDto> save(@RequestBody CommentDto commentDto) {
     CommentDto serviceCommentDto = commentService.create(commentDto);
     return new ResponseEntity<>(serviceCommentDto, HttpStatus.CREATED);
   }
 
   @GetMapping
-  public ResponseEntity<Object> getAll(
+  public ResponseEntity<Page<CommentDto>> getAll(
       @RequestParam(name = "page_number") Integer pageNumber,
       @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
     Page<CommentDto> commentDtoPage = commentService.readAll(PageRequest.of(pageNumber, pageSize));
@@ -38,7 +38,7 @@ public class CommentController {
   }
 
   @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> getAllByWithFilter(
+  public ResponseEntity<Page<CommentDto>> getAllWithFilter(
       @RequestParam(name = "page_number") Integer pageNumber,
       @RequestParam(name = "page_size", defaultValue = "15", required = false) Integer pageSize,
       @RequestBody CommentsFilter commentsFilter) {
@@ -54,7 +54,7 @@ public class CommentController {
   }
 
   @GetMapping("/search")
-  public ResponseEntity<Object> search(
+  public ResponseEntity<Page<CommentDto>> search(
       @RequestParam String text,
       @RequestParam List<String> fields,
       @RequestParam(name = "page_number") Integer pageNumber,
@@ -64,7 +64,7 @@ public class CommentController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Object> getById(@PathVariable Integer id) {
+  public ResponseEntity<CommentDto> getById(@PathVariable Integer id) {
     Optional<CommentDto> commentDto = commentService.readById(id);
     return ResponseEntity.ok(
         commentDto.orElseThrow(() -> new NotFoundException("Comment not found")));
@@ -78,8 +78,8 @@ public class CommentController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Object> deleteById(@PathVariable Integer id) {
+  public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
     commentService.deleteById(id);
-    return ResponseEntity.ok(id);
+    return ResponseEntity.ok().build();
   }
 }

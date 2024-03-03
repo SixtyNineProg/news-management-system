@@ -42,12 +42,14 @@ ext {
     apacheLuceneVersion = '9.10.0'
     hibernateSearchVersion = '7.0.0.Final'
     jakartaPersistenceVersion = '3.1.0'
+    set('springCloudVersion', "2023.0.0")
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.liquibase:liquibase-core'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
@@ -74,6 +76,12 @@ dependencies {
     implementation "org.hibernate.search:hibernate-search-backend-lucene:${hibernateSearchVersion}"
 
     implementation "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceVersion}"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.named('test') {
