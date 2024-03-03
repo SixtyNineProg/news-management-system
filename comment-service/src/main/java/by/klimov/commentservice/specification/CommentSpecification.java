@@ -5,20 +5,19 @@ import by.klimov.commentservice.model.CommentsFilter;
 import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Component
 public class CommentSpecification {
 
-  public static Specification<Comment> matchesFilter(CommentsFilter filter) {
-    return (root, query, cb) -> {
+  public Specification<Comment> matchesFilter(CommentsFilter filter) {
+    return (root, query, criteriaBuilder) -> {
       List<Predicate> predicates = new ArrayList<>();
       if (filter.getNewsId() != null) {
-        predicates.add(cb.equal(root.get(Comment.Fields.newsId), filter.getNewsId()));
+        predicates.add(criteriaBuilder.equal(root.get(Comment.Fields.newsId), filter.getNewsId()));
       }
-      return cb.and(predicates.toArray(new Predicate[0]));
+      return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     };
   }
 }

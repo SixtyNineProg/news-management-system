@@ -26,10 +26,13 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
   private final CommentMapper commentMapper;
+  private final CommentSpecification commentSpecification;
 
-  public CommentServiceImpl(CommentRepository commentRepository) {
+  public CommentServiceImpl(
+      CommentRepository commentRepository, CommentSpecification commentSpecification) {
     this.commentRepository = commentRepository;
     this.commentMapper = CommentMapper.INSTANCE;
+    this.commentSpecification = commentSpecification;
   }
 
   /**
@@ -153,7 +156,7 @@ public class CommentServiceImpl implements CommentService {
   @Override
   public Page<CommentDto> readAllWithFilter(
       CommentsFilter commentsFilter, PageRequest pageRequest) {
-    Specification<Comment> specification = CommentSpecification.matchesFilter(commentsFilter);
+    Specification<Comment> specification = commentSpecification.matchesFilter(commentsFilter);
     Page<Comment> comments = commentRepository.findAll(specification, pageRequest);
     return comments.map(commentMapper::toCommentDto);
   }
@@ -166,7 +169,7 @@ public class CommentServiceImpl implements CommentService {
    */
   @Override
   public void deleteAllWithFilter(CommentsFilter commentsFilter) {
-    Specification<Comment> specification = CommentSpecification.matchesFilter(commentsFilter);
+    Specification<Comment> specification = commentSpecification.matchesFilter(commentsFilter);
     List<Comment> comments = commentRepository.findAll(specification);
     commentRepository.deleteAll(comments);
   }

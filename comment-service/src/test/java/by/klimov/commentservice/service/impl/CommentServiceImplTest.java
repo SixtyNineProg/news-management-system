@@ -17,7 +17,11 @@ import by.klimov.commentservice.dto.CommentDto;
 import by.klimov.commentservice.entity.Comment;
 import by.klimov.commentservice.exception.NotFoundException;
 import by.klimov.commentservice.mapper.CommentMapper;
+import by.klimov.commentservice.model.CommentsFilter;
 import by.klimov.commentservice.repository.CommentRepository;
+import by.klimov.commentservice.specification.CommentSpecification;
+
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -26,6 +30,8 @@ import org.mockito.Captor;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
 @RequiredArgsConstructor
 @SpringBootTest(classes = CommentServiceImpl.class)
@@ -34,8 +40,16 @@ class CommentServiceImplTest {
   @MockBean private final CommentRepository commentRepository;
 
   @MockBean private final CommentMapper commentMapper;
+
+  @MockBean private final CommentSpecification commentSpecification;
+
   private final CommentServiceImpl commentService;
+
   @Captor private ArgumentCaptor<Comment> commentArgumentCaptor;
+
+  @Captor private ArgumentCaptor<Specification<Comment>> specificationArgumentCaptor;
+
+  @Captor private ArgumentCaptor<List<Comment>> listArgumentCaptor;
 
   @Test
   void create_whenCreateComment_thenCommentExpected() {
@@ -125,9 +139,10 @@ class CommentServiceImplTest {
   @Test
   void deleteById_whenDeleteById_thenCallRepositoryDeleteWithExpectedObject() {
     // given
-    Integer id = CommentTestData.builder().build().buildCommentDto().id();
+    CommentTestData commentTestData = CommentTestData.builder().build();
+    Integer id = commentTestData.buildCommentDto().id();
     Comment comment = CommentTestData.builder().build().buildComment();
-    Optional<Comment> optionalComment = Optional.of(comment);
+    Optional<Comment> optionalComment = commentTestData.buildOptionalComment();
 
     doNothing().when(commentRepository).delete(comment);
     doReturn(optionalComment).when(commentRepository).findById(id);
@@ -166,12 +181,12 @@ class CommentServiceImplTest {
     // given
     CommentTestData commentTestData = CommentTestData.builder().build();
     Page<CommentDto> expected = commentTestData.buildCommentDtoPage();
-    Page<Comment> CommentPage = commentTestData.buildCommentPage();
-    Comment Comment = commentTestData.buildComment();
-    CommentDto CommentDto = commentTestData.buildCommentDto();
+    Page<Comment> commentPage = commentTestData.buildCommentPage();
+    Comment comment = commentTestData.buildComment();
+    CommentDto commentDto = commentTestData.buildCommentDto();
 
-    doReturn(CommentPage).when(commentRepository).findAll(expected.getPageable());
-    doReturn(CommentDto).when(commentMapper).toCommentDto(Comment);
+    doReturn(commentPage).when(commentRepository).findAll(expected.getPageable());
+    doReturn(commentDto).when(commentMapper).toCommentDto(comment);
 
     // when
     Page<CommentDto> actual = commentService.readAll(PAGE_REQUEST);
@@ -185,14 +200,14 @@ class CommentServiceImplTest {
     // given
     CommentTestData commentTestData = CommentTestData.builder().build();
     Page<CommentDto> expected = commentTestData.buildCommentDtoPage();
-    Page<Comment> CommentPage = commentTestData.buildCommentPage();
-    Comment Comment = commentTestData.buildComment();
-    CommentDto CommentDto = commentTestData.buildCommentDto();
+    Page<Comment> commentPage = commentTestData.buildCommentPage();
+    Comment comment = commentTestData.buildComment();
+    CommentDto commentDto = commentTestData.buildCommentDto();
 
-    doReturn(CommentPage)
+    doReturn(commentPage)
         .when(commentRepository)
         .searchBy(SEARCHING_TEXT, PAGE_REQUEST, SEARCHABLE_FILED);
-    doReturn(CommentDto).when(commentMapper).toCommentDto(Comment);
+    doReturn(commentDto).when(commentMapper).toCommentDto(comment);
 
     // when
     Page<CommentDto> actual =
@@ -213,5 +228,67 @@ class CommentServiceImplTest {
 
     // then
     // assertion in "when" block
+  }
+
+  @Test
+  void readAllWithFilter_whenReadAllWithFilterAndPageRequest_thenValidPageExpected() {
+    // given
+    CommentTestData commentTestData = CommentTestData.builder().build();
+    CommentsFilter commentsFilter = commentTestData.buildCommentFilterForId();
+    PageRequest pageRequest = commentTestData.buildPageRequest();
+    Page<CommentDto> expected = commentTestData.buildCommentDtoPage();
+    Page<Comment> commentPage = commentTestData.buildCommentPage();
+    Comment comment = commentTestData.buildComment();
+    CommentDto commentDto = commentTestData.buildCommentDto();
+    Specification<Comment> specification = commentTestData.buildCommentSpecificationForId();
+
+    doReturn(specification).when(commentSpecification).matchesFilter(commentsFilter);
+    doReturn(commentPage).when(commentRepository).findAll(specification, pageRequest);
+    doReturn(commentDto).when(commentMapper).toCommentDto(comment);
+
+    // when
+    Page<CommentDto> actual = commentService.readAllWithFilter(commentsFilter, pageRequest);
+
+    // then
+    assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  void deleteAllWithFilter_whenDeleteAllWithFilter_thenCallFindAllWithExpectedSpecification() {
+    // given
+    CommentTestData commentTestData = CommentTestData.builder().build();
+    CommentsFilter commentsFilter = commentTestData.buildCommentFilterForId();
+    PageRequest pageRequest = commentTestData.buildPageRequest();
+    Page<Comment> commentPage = commentTestData.buildCommentPage();
+    Specification<Comment> specification = commentTestData.buildCommentSpecificationForId();
+
+    doReturn(specification).when(commentSpecification).matchesFilter(commentsFilter);
+    doReturn(commentPage).when(commentRepository).findAll(specification, pageRequest);
+
+    // when
+    commentService.deleteAllWithFilter(commentsFilter);
+
+    // then
+    verify(commentRepository).findAll(specificationArgumentCaptor.capture());
+    assertThat(specificationArgumentCaptor.getValue()).isEqualTo(specification);
+  }
+
+  @Test
+  void deleteAllWithFilter_whenDeleteAllWithFilter_thenCallDeleteAllWithExpectedCommentList() {
+    // given
+    CommentTestData commentTestData = CommentTestData.builder().build();
+    CommentsFilter commentsFilter = commentTestData.buildCommentFilterForId();
+    List<Comment> comments = commentTestData.buildComments();
+    Specification<Comment> specification = commentTestData.buildCommentSpecificationForId();
+
+    doReturn(specification).when(commentSpecification).matchesFilter(commentsFilter);
+    doReturn(comments).when(commentRepository).findAll(specification);
+
+    // when
+    commentService.deleteAllWithFilter(commentsFilter);
+
+    // then
+    verify(commentRepository).deleteAll(listArgumentCaptor.capture());
+    assertThat(listArgumentCaptor.getValue()).isEqualTo(comments);
   }
 }
