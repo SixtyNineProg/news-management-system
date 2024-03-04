@@ -126,6 +126,11 @@ public class NewsServiceImpl implements NewsService {
     return newsDtoPage;
   }
 
+  @Override
+  public Page<CommentDto> readCommentsByNewsId(Integer newsId, PageRequest pageRequest) {
+    return commentService.getCommentDtoPageWithFilter(pageRequest, new CommentsFilter(newsId));
+  }
+
   /**
    * Searches for news items based on the provided text and fields, and returns them along with
    * their comments in a paginated format.

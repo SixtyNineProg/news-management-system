@@ -1,5 +1,6 @@
 package by.klimov.newsservice.controller;
 
+import by.klimov.newsservice.dto.CommentDto;
 import by.klimov.newsservice.dto.NewsDto;
 import by.klimov.newsservice.service.NewsService;
 import java.util.List;
@@ -56,6 +57,15 @@ public class NewsController {
           Integer commentsPageSize) {
     NewsDto newsDto = newsService.readById(id, commentsPageSize);
     return ResponseEntity.ok(newsDto);
+  }
+
+  @GetMapping("/{id}/comments")
+  public ResponseEntity<Page<CommentDto>> getCommentsByNewsId(
+          @PathVariable Integer id,
+          @RequestParam(name = "page_number") Integer pageNumber,
+          @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
+    Page<CommentDto> commentDtoPage = newsService.readCommentsByNewsId(id, PageRequest.of(pageNumber, pageSize));
+    return ResponseEntity.ok(commentDtoPage);
   }
 
   @PutMapping(

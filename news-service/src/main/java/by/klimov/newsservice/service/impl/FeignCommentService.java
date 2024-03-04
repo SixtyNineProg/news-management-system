@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FeignCommentService implements CommentService {
 
+  public static final String RESPONSE_ENTITY_IS_EMPTY =
+      "An error occurred while executing the request. Response entity is empty";
+  public static final String BAD_REQUEST_STATUS_CODE =
+      "An error occurred while executing the request. Status code: ";
   private final CommentFeign commentFeign;
 
   @Override
@@ -30,14 +35,12 @@ public class FeignCommentService implements CommentService {
           commentFeign.getAllWithFilter(page, commentDtoPageSize, commentsFilter);
 
       if (Objects.isNull(pageResponseEntity)) {
-        throw new CommentServiceException(
-            "An error occurred while executing the request. Response entity is empty");
+        throw new CommentServiceException(RESPONSE_ENTITY_IS_EMPTY);
       }
 
       if (!pageResponseEntity.getStatusCode().equals(HttpStatus.OK)) {
         throw new CommentServiceException(
-            "An error occurred while executing the request. Status code: "
-                + pageResponseEntity.getStatusCode());
+            BAD_REQUEST_STATUS_CODE + pageResponseEntity.getStatusCode());
       }
 
       Page<CommentDto> commentDtoPage = pageResponseEntity.getBody();
@@ -60,14 +63,29 @@ public class FeignCommentService implements CommentService {
     ResponseEntity<Void> responseEntity = commentFeign.deleteAllWithFilter(commentsFilter);
 
     if (Objects.isNull(responseEntity)) {
-      throw new CommentServiceException(
-          "An error occurred while executing the request. Response entity is empty");
+      throw new CommentServiceException(RESPONSE_ENTITY_IS_EMPTY);
     }
 
     if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-      throw new CommentServiceException(
-          "An error occurred while executing the request. Status code: "
-              + responseEntity.getStatusCode());
+      throw new CommentServiceException(BAD_REQUEST_STATUS_CODE + responseEntity.getStatusCode());
     }
+  }
+
+  @Override
+  public Page<CommentDto> getCommentDtoPageWithFilter(
+      PageRequest pageRequest, CommentsFilter commentsFilter) {
+    ResponseEntity<Page<CommentDto>> responseEntity =
+        commentFeign.getAllWithFilter(
+            pageRequest.getPageNumber(), pageRequest.getPageSize(), commentsFilter);
+
+    if (Objects.isNull(responseEntity)) {
+      throw new CommentServiceException(RESPONSE_ENTITY_IS_EMPTY);
+    }
+
+    if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+      throw new CommentServiceException(BAD_REQUEST_STATUS_CODE + responseEntity.getStatusCode());
+    }
+
+    return responseEntity.getBody();
   }
 }
