@@ -54,4 +54,20 @@ public class FeignCommentService implements CommentService {
     }
     return commentDtos;
   }
+
+  @Override
+  public void deleteAllWithFilter(CommentsFilter commentsFilter) {
+    ResponseEntity<Void> responseEntity = commentFeign.deleteAllWithFilter(commentsFilter);
+
+    if (Objects.isNull(responseEntity)) {
+      throw new CommentServiceException(
+          "An error occurred while executing the request. Response entity is empty");
+    }
+
+    if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+      throw new CommentServiceException(
+          "An error occurred while executing the request. Status code: "
+              + responseEntity.getStatusCode());
+    }
+  }
 }

@@ -47,14 +47,12 @@ public class NewsServiceImpl implements NewsService {
   }
 
   /**
-   * This method is used to read a News object by its ID from the repository. It first finds the
-   * News object in the repository by its ID. If the News object exists, it converts the News object
-   * to a NewsDto before returning.
+   * This method reads a news item by its ID and returns it along with its comments.
    *
-   * @param id The ID of the News object to be read from the repository.
-   * @return An Optional that may contain the NewsDto object if one with the given ID exists in the
-   *     repository.
-   * @override
+   * @param id The ID of the news item to be read.
+   * @param commentsPageSize The size of the page for comments to be returned.
+   * @return A NewsDto object that contains the news item and its comments.
+   * @throws NotFoundException If the news item with the given ID is not found.
    */
   @Override
   public NewsDto readById(Integer id, Integer commentsPageSize) {
@@ -93,13 +91,10 @@ public class NewsServiceImpl implements NewsService {
   }
 
   /**
-   * This method is used to delete a News object by its ID from the repository. It first finds the
-   * News object in the repository by its ID. If the News object does not exist, it throws a
-   * NotFoundException. Otherwise, it deletes the News object from the repository.
+   * Deletes a news item by its ID and also deletes its associated comments.
    *
-   * @param id The ID of the News object to be deleted from the repository.
-   * @throws NotFoundException if no News object with the given ID exists in the repository.
-   * @override
+   * @param id The ID of the news item to be deleted.
+   * @throws NotFoundException If the news item with the given ID is not found.
    */
   @Override
   public void deleteById(Integer id) {
@@ -108,40 +103,44 @@ public class NewsServiceImpl implements NewsService {
         optionalNews.orElseThrow(
             () -> new NotFoundException(String.format(ERROR_FORMAT_NOT_FOUND, id)));
     newsRepository.delete(news);
+    commentService.deleteAllWithFilter(new CommentsFilter(id));
   }
 
   /**
-   * This method is used to read all News objects from the repository and return them as a Page of
-   * NewsDto objects. It first finds all News objects in the repository and returns them as a Page.
-   * Then, it converts each News object in the Page to a NewsDto.
+   * Retrieves all news items and their comments in a paginated format.
    *
-   * @param pageRequest The PageRequest object that specifies the pagination information.
-   * @return A Page of NewsDto objects that represent all News objects in the repository.
-   * @override
+   * @param pageRequest The pagination and sorting details for the news items.
+   * @param commentsPageSize The size of the page for comments.
+   * @return A paginated list of news items and their comments.
    */
   @Override
-  public Page<NewsDto> readAll(PageRequest pageRequest) {
+  public Page<NewsDto> readAll(PageRequest pageRequest, Integer commentsPageSize) {
     Page<News> newsPage = newsRepository.findAll(pageRequest);
-    return newsPage.map(newsMapper::toDto);
+    Page<NewsDto> newsDtoPage = newsPage.map(newsMapper::toDto);
+    List<NewsDto> newsDtos = newsDtoPage.getContent();
+    newsDtos.forEach(
+        newsDto ->
+            newsDto.setComments(
+                commentService.getAllCommentDtoPagesWithFilter(
+                    new CommentsFilter(newsDto.getId()), commentsPageSize)));
+    return newsDtoPage;
   }
 
   /**
-   * This method is used to search for News objects in the repository based on a given text and
-   * fields, and return them as a Page of NewsDto objects. It first gets the list of searchable
-   * fields from the News class. If no fields are provided, it uses all searchable fields for the
-   * search. If any of the provided fields are not searchable, it throws an
-   * IllegalArgumentException. Then, it searches the repository with the given text, pagination
-   * information, and fields, and returns the results as a Page of NewsDto objects.
+   * Searches for news items based on the provided text and fields, and returns them along with
+   * their comments in a paginated format.
    *
-   * @param text The text to search for in the specified fields.
-   * @param fields The fields to search in. If empty, all searchable fields are used.
-   * @param pageRequest The PageRequest object that specifies the pagination information.
-   * @return A Page of NewsDto objects that match the search criteria.
-   * @throws IllegalArgumentException if any of the provided fields are not searchable.
-   * @override
+   * @param text The text to search for in the news items.
+   * @param fields The fields in the news items to search by. If empty, all searchable fields are
+   *     used.
+   * @param pageRequest The pagination and sorting details for the news items.
+   * @param commentsPageSize The size of the page for comments.
+   * @return A paginated list of news items and their comments that match the search criteria.
+   * @throws IllegalArgumentException If any of the provided fields to search by are not searchable.
    */
   @Override
-  public Page<NewsDto> search(String text, List<String> fields, PageRequest pageRequest) {
+  public Page<NewsDto> search(
+      String text, List<String> fields, PageRequest pageRequest, Integer commentsPageSize) {
     List<String> searchableFields =
         ReflectionUtil.getAnnotatedFieldNames(News.class, FullTextField.class);
 
@@ -156,6 +155,13 @@ public class NewsServiceImpl implements NewsService {
 
     Page<News> newsPage =
         newsRepository.searchBy(text, pageRequest, fieldsToSearchBy.toArray(new String[0]));
-    return newsPage.map(newsMapper::toDto);
+    Page<NewsDto> newsDtoPage = newsPage.map(newsMapper::toDto);
+    List<NewsDto> newsDtos = newsDtoPage.getContent();
+    newsDtos.forEach(
+        newsDto ->
+            newsDto.setComments(
+                commentService.getAllCommentDtoPagesWithFilter(
+                    new CommentsFilter(newsDto.getId()), commentsPageSize)));
+    return newsDtoPage;
   }
 }

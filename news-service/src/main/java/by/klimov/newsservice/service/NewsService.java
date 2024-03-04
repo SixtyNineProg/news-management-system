@@ -7,7 +7,8 @@ import org.springframework.data.domain.PageRequest;
 
 public interface NewsService extends CrudService<NewsDto, Integer> {
 
-  Page<NewsDto> readAll(PageRequest pageRequest);
+  Page<NewsDto> readAll(PageRequest pageRequest, Integer commentsPageSize);
 
-  Page<NewsDto> search(String text, List<String> fields, PageRequest pageRequest);
+  Page<NewsDto> search(
+      String text, List<String> fields, PageRequest pageRequest, Integer commentsPageSize);
 }
