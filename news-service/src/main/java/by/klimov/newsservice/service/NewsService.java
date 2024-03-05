@@ -14,4 +14,6 @@ public interface NewsService extends CrudService<NewsDto, Integer> {
       String text, List<String> fields, PageRequest pageRequest, Integer commentsPageSize);
 
   Page<CommentDto> readCommentsByNewsId(Integer newsId, PageRequest pageRequest);
+
+  CommentDto readCommentByIdFromNews(Integer newsId, Integer commentId);
 }

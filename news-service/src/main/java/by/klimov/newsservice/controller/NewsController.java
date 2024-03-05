@@ -61,11 +61,19 @@ public class NewsController {
 
   @GetMapping("/{id}/comments")
   public ResponseEntity<Page<CommentDto>> getCommentsByNewsId(
-          @PathVariable Integer id,
-          @RequestParam(name = "page_number") Integer pageNumber,
-          @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
-    Page<CommentDto> commentDtoPage = newsService.readCommentsByNewsId(id, PageRequest.of(pageNumber, pageSize));
+      @PathVariable Integer id,
+      @RequestParam(name = "page_number") Integer pageNumber,
+      @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
+    Page<CommentDto> commentDtoPage =
+        newsService.readCommentsByNewsId(id, PageRequest.of(pageNumber, pageSize));
     return ResponseEntity.ok(commentDtoPage);
+  }
+
+  @GetMapping("/{newsId}/comments/{commentId}")
+  public ResponseEntity<CommentDto> getCommentsByIdFromNews(
+      @PathVariable Integer newsId, @PathVariable Integer commentId) {
+    CommentDto commentDto = newsService.readCommentByIdFromNews(newsId, commentId);
+    return ResponseEntity.ok(commentDto);
   }
 
   @PutMapping(

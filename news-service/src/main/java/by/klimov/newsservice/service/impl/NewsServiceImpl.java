@@ -25,6 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class NewsServiceImpl implements NewsService {
 
   public static final String ERROR_FORMAT_NOT_FOUND = "News with id = %s not found";
+  public static final String ERROR_FORMAT_COMMENT_NEWS_NOT_FOUND =
+      "Comment with id = %s in news with id = %s not found";
+  public static final int DEFAULT_COMMENT_DTO_PAGE_SIZE = 10;
 
   private final NewsRepository newsRepository;
   private final NewsMapper newsMapper;
@@ -61,9 +64,8 @@ public class NewsServiceImpl implements NewsService {
         optionalNews.orElseThrow(
             () -> new NotFoundException(String.format(ERROR_FORMAT_NOT_FOUND, id)));
     NewsDto newsDto = newsMapper.toDto(news);
-    CommentsFilter commentsFilter = new CommentsFilter(id);
     List<Page<CommentDto>> commentDtos =
-        commentService.getAllCommentDtoPagesWithFilter(commentsFilter, commentsPageSize);
+        commentService.getAllCommentDtoPagesWithFilter(new CommentsFilter(id), commentsPageSize);
     newsDto.setComments(commentDtos);
     return newsDto;
   }
@@ -126,9 +128,39 @@ public class NewsServiceImpl implements NewsService {
     return newsDtoPage;
   }
 
+  /**
+   * Retrieves all comments for a specific news item in a paginated format.
+   *
+   * @param newsId The ID of the news item for which comments are to be retrieved.
+   * @param pageRequest The pagination and sorting details for the comments.
+   * @return A paginated list of comments for the specified news item.
+   */
   @Override
   public Page<CommentDto> readCommentsByNewsId(Integer newsId, PageRequest pageRequest) {
     return commentService.getCommentDtoPageWithFilter(pageRequest, new CommentsFilter(newsId));
+  }
+
+  /**
+   * Retrieves a specific comment from a specific news item.
+   *
+   * @param newsId The ID of the news item from which the comment is to be retrieved.
+   * @param commentId The ID of the comment to be retrieved.
+   * @return The CommentDto object that represents the comment.
+   * @throws NotFoundException If the comment with the given ID is not found in the news item with the given ID.
+   */
+  @Override
+  public CommentDto readCommentByIdFromNews(Integer newsId, Integer commentId) {
+    List<Page<CommentDto>> commentDtos =
+        commentService.getAllCommentDtoPagesWithFilter(
+            new CommentsFilter(newsId), DEFAULT_COMMENT_DTO_PAGE_SIZE);
+    return commentDtos.stream()
+        .flatMap(page -> page.getContent().stream())
+        .filter(commentDto -> commentDto.id().equals(commentId))
+        .findFirst()
+        .orElseThrow(
+            () ->
+                new NotFoundException(
+                    String.format(ERROR_FORMAT_COMMENT_NEWS_NOT_FOUND, commentId, newsId)));
   }
 
   /**
