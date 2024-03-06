@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "comment-service", url = "http://comments-service:8080/v1/comments")
+@FeignClient(
+    name = "${feign.client.comment-service.name}",
+    url = "${feign.client.comment-service.url}")
 public interface CommentFeign {
 
   @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)

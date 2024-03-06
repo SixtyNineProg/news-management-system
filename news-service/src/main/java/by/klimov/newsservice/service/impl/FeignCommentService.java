@@ -23,8 +23,18 @@ public class FeignCommentService implements CommentService {
       "An error occurred while executing the request. Response entity is empty";
   public static final String BAD_REQUEST_STATUS_CODE =
       "An error occurred while executing the request. Status code: ";
+
   private final CommentFeign commentFeign;
 
+  /**
+   * Retrieves all comments that match the provided filter in a paginated format.
+   *
+   * @param commentsFilter The filter to apply when retrieving the comments.
+   * @param commentDtoPageSize The size of the page for comments.
+   * @return A list of pages of CommentDto objects that match the filter.
+   * @throws CommentServiceException If there is an issue with the response entity or if the
+   *     response status is not OK.
+   */
   @Override
   public List<Page<CommentDto>> getAllCommentDtoPagesWithFilter(
       CommentsFilter commentsFilter, Integer commentDtoPageSize) {
@@ -58,6 +68,12 @@ public class FeignCommentService implements CommentService {
     return commentDtos;
   }
 
+  /**
+   * Deletes all comments that match the provided filter.
+   *
+   * @param commentsFilter The filter to apply when deleting the comments.
+   * @throws CommentServiceException If there is an issue with the response entity or if the response status is not OK.
+   */
   @Override
   public void deleteAllWithFilter(CommentsFilter commentsFilter) {
     ResponseEntity<Void> responseEntity = commentFeign.deleteAllWithFilter(commentsFilter);
@@ -71,6 +87,14 @@ public class FeignCommentService implements CommentService {
     }
   }
 
+  /**
+   * Retrieves a page of comments that match the provided filter.
+   *
+   * @param pageRequest The pagination and sorting details for the comments.
+   * @param commentsFilter The filter to apply when retrieving the comments.
+   * @return A paginated list of CommentDto objects that match the filter.
+   * @throws CommentServiceException If there is an issue with the response entity or if the response status is not OK.
+   */
   @Override
   public Page<CommentDto> getCommentDtoPageWithFilter(
       PageRequest pageRequest, CommentsFilter commentsFilter) {

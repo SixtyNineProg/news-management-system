@@ -10,9 +10,16 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = NewsService.class)
+@Mapper(
+    componentModel = "spring",
+    uses = NewsService.class,
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface NewsMapper {
+
+  NewsMapper INSTANCE = Mappers.getMapper(NewsMapper.class);
 
   @Mapping(target = "comments", ignore = true)
   @Mapping(target = "time", source = "time", qualifiedByName = "toLocalDateTime")

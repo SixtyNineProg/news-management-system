@@ -34,6 +34,25 @@ cache:
   type: LRU
   capacity: 10
 
+feign:
+  client:
+    comment-service:
+      name: comment-service
+      url: http://comments-service:8080/v1/comments
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+feign:
+  client:
+    comment-service:
+      name: comment-service
+      url: http://localhost:8080/v1/comments
+
 ---
 
 spring:
