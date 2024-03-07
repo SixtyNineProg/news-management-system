@@ -60,7 +60,9 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
 
   public static final String BASE_REQUEST_MAPPING = "/news";
   private final ObjectMapper objectMapper = initObjectMapper();
+
   @Autowired private MockMvc mockMvc;
+
   @MockBean private NewsServiceImpl newsService;
 
   @SneakyThrows
