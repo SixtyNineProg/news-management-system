@@ -27,7 +27,7 @@ public class NewsController {
     return new ResponseEntity<>(serviceNewsDto, HttpStatus.CREATED);
   }
 
-  @GetMapping
+  @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<Page<NewsDto>> getAll(
       @RequestParam(name = "page_number") Integer pageNumber,
       @RequestParam(name = "page_size", defaultValue = "15", required = false) Integer pageSize,

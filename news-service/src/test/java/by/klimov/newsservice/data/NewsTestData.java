@@ -30,19 +30,30 @@ public class NewsTestData {
   public static final Integer PAGE_NUMBER = 1;
   public static final Integer PAGE_SIZE = 4;
   public static final long TOTAL = 5;
-  public static final String SEARCHING_TEXT = "word";
   public static final PageRequest PAGE_REQUEST =
-      PageRequest.of(NewsTestData.PAGE_NUMBER, NewsTestData.PAGE_SIZE);
+          PageRequest.of(NewsTestData.PAGE_NUMBER, NewsTestData.PAGE_SIZE);
+  public static final int COMMENTS_PAGE_SIZE = 10;
+
+  public static final String SEARCH_TEXT = "search";
+  public static final String SEARCHING_TEXT = "word";
   public static final String SEARCHABLE_FILED = "text";
   public static final List<String> SEARCHABLE_FILED_LIST =
       Collections.singletonList(SEARCHABLE_FILED);
   public static final String UNKNOWN_SEARCH_FIELD = "unknown_search_field";
   public static final List<String> UNKNOWN_SEARCHABLE_FILED_LIST =
       Collections.singletonList(UNKNOWN_SEARCH_FIELD);
+
+  public static final String PARAM_NAME_COMMENTS_PAGE_SIZE = "comments_page_size";
+  public static final String PARAM_NAME_TEXT = "text";
+  public static final String PARAM_NAME_FIELDS = "fields";
+
   private final ObjectMapper objectMapper = initObjectMapper();
   private final NewsMapper newsMapper = NewsMapper.INSTANCE;
+
   @Builder.Default private Integer id = 1;
+
   @Builder.Default private Timestamp time = new Timestamp(TEST_MILLIS);
+
   @Builder.Default private String title = "Future Tech: New Horizons";
 
   @Builder.Default
@@ -57,7 +68,7 @@ public class NewsTestData {
     return News.builder().id(id).time(time).title(title).text(text).build();
   }
 
-  public List<News> buildNewss() {
+  public List<News> buildNewsList() {
     News News = buildNews();
     return List.of(News, News, News);
   }
@@ -67,7 +78,7 @@ public class NewsTestData {
   }
 
   public List<NewsDto> buildNewsDtos() {
-    return buildNewss().stream().map(newsMapper::toDto).toList();
+    return buildNewsList().stream().map(newsMapper::toDto).toList();
   }
 
   public Page<NewsDto> buildNewsDtoPage() {
@@ -75,7 +86,7 @@ public class NewsTestData {
   }
 
   public Page<News> buildNewsPage() {
-    return new PageImpl<>(buildNewss(), PAGE_REQUEST, TOTAL);
+    return new PageImpl<>(buildNewsList(), PAGE_REQUEST, TOTAL);
   }
 
   public String buildJsonNewsDto() throws JsonProcessingException {

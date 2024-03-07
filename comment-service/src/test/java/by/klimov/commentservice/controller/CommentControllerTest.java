@@ -85,7 +85,7 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
 
   @SneakyThrows
   @Test
-  void getAll_whenGet_thenValidAnswerCodeAndContentTypeExpected() {
+  void getAll_whenGetAll_thenValidAnswerCodeAndContentTypeExpected() {
     // given
     doReturn(CommentTestData.builder().build().buildCommentDtoPage())
         .when(commentService)
@@ -115,9 +115,9 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
   void save_whenSaveCommentDto_thenValidAnswerCodeAndPathExpected() {
     // given
     CommentTestData commentTestData = CommentTestData.builder().build();
-    CommentDto CommentDto = commentTestData.buildCommentDto();
+    CommentDto commentDto = commentTestData.buildCommentDto();
     String jsonCommentDto = commentTestData.buildJsonCommentDto();
-    doReturn(CommentDto).when(commentService).create(CommentDto);
+    doReturn(commentDto).when(commentService).create(commentDto);
 
     // when
     mockMvc
@@ -134,7 +134,7 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
 
   @SneakyThrows
   @Test
-  void deleteByUuid_whenDeleteByUuid_thenValidAnswerCodeAndPathExpected() {
+  void deleteById_whenDeleteById_thenValidAnswerCodeAndPathExpected() {
     // given
     Integer id = CommentTestData.builder().build().buildCommentDto().id();
     doNothing().when(commentService).deleteById(id);
@@ -151,9 +151,9 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
   void update_whenUpdate_thenValidAnswerCode() {
     // given
     CommentTestData commentTestData = CommentTestData.builder().build();
-    CommentDto CommentDto = commentTestData.buildCommentDto();
+    CommentDto commentDto = commentTestData.buildCommentDto();
     String jsonCommentDto = commentTestData.buildJsonCommentDto();
-    doReturn(CommentDto).when(commentService).update(CommentDto);
+    doReturn(commentDto).when(commentService).update(commentDto);
 
     // when
     mockMvc
