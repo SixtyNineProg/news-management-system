@@ -92,7 +92,7 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
   @Test
   void getAll_whenGetAll_thenValidAnswerCodeAndContentTypeExpected() {
     // given
-    doReturn(NewsTestData.builder().build().buildNewsDtoPage())
+    doReturn(NewsTestData.builder().build().buildNewsDtoWithCommentsPage())
         .when(newsService)
         .readAll(PAGE_REQUEST, COMMENTS_PAGE_SIZE);
 
@@ -122,7 +122,7 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
   @Test
   void search() {
     // given
-    doReturn(NewsTestData.builder().build().buildNewsDtoPage())
+    doReturn(NewsTestData.builder().build().buildNewsDtoWithCommentsPage())
         .when(newsService)
         .search(SEARCH_TEXT, SEARCHABLE_FILED_LIST, PAGE_REQUEST, COMMENTS_PAGE_SIZE);
 
@@ -224,7 +224,7 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
     // given
     CommentTestData commentTestData = CommentTestData.builder().build();
     NewsTestData newsTestData = NewsTestData.builder().build();
-    Integer newsId = newsTestData.buildNewsDto().getId();
+    Integer newsId = newsTestData.buildNewsDtoWithComments().getId();
     Integer commentId = commentTestData.buildCommentDto().id();
     CommentDto expected = commentTestData.buildCommentDto();
 
@@ -268,7 +268,7 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
   @Test
   void deleteById_whenDeleteById_thenValidAnswerCodeAndPathExpected() {
     // given
-    Integer id = NewsTestData.builder().build().buildNewsDto().getId();
+    Integer id = NewsTestData.builder().build().buildNewsDtoWithComments().getId();
     doNothing().when(newsService).deleteById(id);
 
     // when

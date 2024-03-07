@@ -1,7 +1,10 @@
 # News service
 
 ## Description
-Сервис для работы с новостями
+Сервис для работы с новостями.
+
+### Основна сущность:
+News (новость) содержит поля: <br/>id, time, title, text и comments (list)
 
 ### DOC
 JSON format:<br/>

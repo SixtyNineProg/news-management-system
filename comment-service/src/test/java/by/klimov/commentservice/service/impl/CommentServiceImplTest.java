@@ -20,30 +20,28 @@ import by.klimov.commentservice.mapper.CommentMapper;
 import by.klimov.commentservice.model.CommentsFilter;
 import by.klimov.commentservice.repository.CommentRepository;
 import by.klimov.commentservice.specification.CommentSpecification;
-
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
-@RequiredArgsConstructor
 @SpringBootTest(classes = CommentServiceImpl.class)
 class CommentServiceImplTest {
 
-  @MockBean private final CommentRepository commentRepository;
+  @MockBean private CommentRepository commentRepository;
 
-  @MockBean private final CommentMapper commentMapper;
+  @MockBean private CommentMapper commentMapper;
 
-  @MockBean private final CommentSpecification commentSpecification;
+  @MockBean private CommentSpecification commentSpecification;
 
-  private final CommentServiceImpl commentService;
+  @Autowired private CommentServiceImpl commentService;
 
   @Captor private ArgumentCaptor<Comment> commentArgumentCaptor;
 
@@ -57,15 +55,14 @@ class CommentServiceImplTest {
     CommentTestData commentTestData = CommentTestData.builder().build();
     CommentDto expected = commentTestData.buildCommentDto();
     Comment comment = commentTestData.buildComment();
-    CommentDto commentDto = CommentTestData.builder().build().buildCommentDto();
     Comment commentWithoutId = CommentTestData.builder().withId(null).build().buildComment();
 
-    doReturn(comment).when(commentMapper).toComment(commentDto);
-    doReturn(commentDto).when(commentMapper).toCommentDto(comment);
+    doReturn(comment).when(commentMapper).toComment(expected);
+    doReturn(expected).when(commentMapper).toCommentDto(comment);
     doReturn(comment).when(commentRepository).save(commentWithoutId);
 
     // when
-    CommentDto actual = commentService.create(commentDto);
+    CommentDto actual = commentService.create(expected);
 
     // then
     assertThat(actual)
@@ -79,11 +76,11 @@ class CommentServiceImplTest {
   void readById_whenGetById_thenOptionalCommentDtoExpected() {
     // given
     CommentDto expected = CommentTestData.builder().build().buildCommentDto();
-    Comment Comment = CommentTestData.builder().build().buildComment();
-    Optional<Comment> optionalComment = Optional.of(Comment);
+    Comment comment = CommentTestData.builder().build().buildComment();
+    Optional<Comment> optionalComment = Optional.of(comment);
 
     doReturn(optionalComment).when(commentRepository).findById(expected.id());
-    doReturn(expected).when(commentMapper).toCommentDto(Comment);
+    doReturn(expected).when(commentMapper).toCommentDto(comment);
 
     // when
     Optional<CommentDto> actual = commentService.readById(expected.id());
@@ -102,12 +99,12 @@ class CommentServiceImplTest {
   void update_whenUpdateCommentDto_theUpdatedCommentDtoExpected() {
     // given
     CommentDto expected = CommentTestData.builder().build().buildCommentDto();
-    Comment Comment = CommentTestData.builder().build().buildComment();
-    Optional<Comment> optionalComment = Optional.of(Comment);
+    Comment comment = CommentTestData.builder().build().buildComment();
+    Optional<Comment> optionalComment = Optional.of(comment);
 
     doReturn(optionalComment).when(commentRepository).findById(expected.id());
-    doReturn(Comment).when(commentMapper).merge(expected, Comment);
-    doReturn(Comment).when(commentRepository).save(Comment);
+    doReturn(comment).when(commentMapper).merge(expected, comment);
+    doReturn(comment).when(commentRepository).save(comment);
 
     // when
     CommentDto actual = commentService.update(expected);

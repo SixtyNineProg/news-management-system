@@ -146,7 +146,8 @@ public class NewsServiceImpl implements NewsService {
    * @param newsId The ID of the news item from which the comment is to be retrieved.
    * @param commentId The ID of the comment to be retrieved.
    * @return The CommentDto object that represents the comment.
-   * @throws NotFoundException If the comment with the given ID is not found in the news item with the given ID.
+   * @throws NotFoundException If the comment with the given ID is not found in the news item with
+   *     the given ID.
    */
   @Override
   public CommentDto readCommentByIdFromNews(Integer newsId, Integer commentId) {
