@@ -229,7 +229,7 @@ class NewsServiceImplTest {
     NewsDto newsDto = newsTestData.buildNewsDto();
     CommentsFilter commentsFilter = newsTestData.buildCommentFilterForId();
     List<Page<CommentDto>> commetsList =
-            CommentTestData.builder().build().buildListCommentDtoPage();
+        CommentTestData.builder().build().buildListCommentDtoPage();
 
     doReturn(newsPage).when(newsRepository).findAll(expected.getPageable());
     doReturn(newsDto).when(newsMapper).toDto(news);

@@ -37,19 +37,12 @@ public class CommentTestData {
   public static final String UNKNOWN_SEARCH_FIELD = "unknown_search_field";
   public static final List<String> UNKNOWN_SEARCHABLE_FILED_LIST =
       Collections.singletonList(UNKNOWN_SEARCH_FIELD);
-
-  @Builder.Default private Integer id = 1;
-
-  @Builder.Default private Timestamp time = new Timestamp(TEST_MILLIS);
-
-  @Builder.Default private String text = "I am so excited about this.";
-
-  @Builder.Default private String userName = "Jane";
-
-  @Builder.Default private Integer newsId = 1;
-
   private final ObjectMapper objectMapper = initObjectMapper();
-
+  @Builder.Default private Integer id = 1;
+  @Builder.Default private Timestamp time = new Timestamp(TEST_MILLIS);
+  @Builder.Default private String text = "I am so excited about this.";
+  @Builder.Default private String userName = "Jane";
+  @Builder.Default private Integer newsId = 1;
   @Builder.Default
   private LocalDateTime timeLocalDateTime =
       LocalDateTime.ofInstant(Instant.ofEpochMilli(TEST_MILLIS), ZoneId.systemDefault());

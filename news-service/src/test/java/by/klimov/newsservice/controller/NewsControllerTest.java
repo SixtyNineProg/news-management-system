@@ -59,12 +59,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 public class NewsControllerTest extends PostgresSqlContainerInitializer {
 
   public static final String BASE_REQUEST_MAPPING = "/news";
-
-  @Autowired private MockMvc mockMvc;
-
-  @MockBean private NewsServiceImpl newsService;
-
   private final ObjectMapper objectMapper = initObjectMapper();
+  @Autowired private MockMvc mockMvc;
+  @MockBean private NewsServiceImpl newsService;
 
   @SneakyThrows
   @Test

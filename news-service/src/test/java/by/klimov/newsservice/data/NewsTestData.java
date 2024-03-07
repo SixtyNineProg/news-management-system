@@ -56,20 +56,14 @@ public class NewsTestData {
 
   private final ObjectMapper objectMapper = initObjectMapper();
   private final NewsMapper newsMapper = NewsMapper.INSTANCE;
-
+  @Builder.Default
+  List<Page<CommentDto>> comments = CommentTestData.builder().build().buildListCommentDtoPage();
   @Builder.Default private Integer id = 1;
-
   @Builder.Default private Timestamp time = new Timestamp(TEST_MILLIS);
-
   @Builder.Default private String title = "Future Tech: New Horizons";
-
   @Builder.Default
   private String text =
       "An overview of the latest achievements in technology and their potential impact on our future.";
-
-  @Builder.Default
-  List<Page<CommentDto>> comments = CommentTestData.builder().build().buildListCommentDtoPage();
-
   @Builder.Default
   private LocalDateTime timeLocalDateTime =
       LocalDateTime.ofInstant(Instant.ofEpochMilli(TEST_MILLIS), ZoneId.systemDefault());

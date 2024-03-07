@@ -72,7 +72,8 @@ public class FeignCommentService implements CommentService {
    * Deletes all comments that match the provided filter.
    *
    * @param commentsFilter The filter to apply when deleting the comments.
-   * @throws CommentServiceException If there is an issue with the response entity or if the response status is not OK.
+   * @throws CommentServiceException If there is an issue with the response entity or if the
+   *     response status is not OK.
    */
   @Override
   public void deleteAllWithFilter(CommentsFilter commentsFilter) {
@@ -93,7 +94,8 @@ public class FeignCommentService implements CommentService {
    * @param pageRequest The pagination and sorting details for the comments.
    * @param commentsFilter The filter to apply when retrieving the comments.
    * @return A paginated list of CommentDto objects that match the filter.
-   * @throws CommentServiceException If there is an issue with the response entity or if the response status is not OK.
+   * @throws CommentServiceException If there is an issue with the response entity or if the
+   *     response status is not OK.
    */
   @Override
   public Page<CommentDto> getCommentDtoPageWithFilter(
