@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,31 +103,31 @@ public class CommentServiceImpl implements CommentService {
   /**
    * This method is used to read all comments with pagination.
    *
-   * @param pageRequest An instance of PageRequest which contains the pagination information.
+   * @param pageable An instance of PageRequest which contains the pagination information.
    * @return Page<CommentDto> Returns a page of CommentDto instances.
    * @throws IllegalArgumentException If the provided PageRequest is null.
    * @override
    */
   @Override
-  public Page<CommentDto> readAll(PageRequest pageRequest) {
-    Page<Comment> commentPage = commentRepository.findAll(pageRequest);
+  public Page<CommentDto> readAll(Pageable pageable) {
+    Page<Comment> commentPage = commentRepository.findAll(pageable);
     return commentPage.map(commentMapper::toCommentDto);
   }
 
   /**
    * This method is used to search for comments based on a text and a list of fields.
    *
-   * @param text The text to be searched in the comments.
-   * @param fields The fields in the Comment class to be searched. If this list is empty, all fields
-   *     annotated with FullTextField in the Comment class will be searched.
-   * @param pageRequest An instance of PageRequest which contains the pagination information.
+   * @param text     The text to be searched in the comments.
+   * @param fields   The fields in the Comment class to be searched. If this list is empty, all fields
+   *                 annotated with FullTextField in the Comment class will be searched.
+   * @param pageable An instance of PageRequest which contains the pagination information.
    * @return Page<CommentDto> Returns a page of CommentDto instances that match the search criteria.
    * @throws IllegalArgumentException If any of the provided fields is not a field of the Comment
-   *     class annotated with FullTextField.
+   *                                  class annotated with FullTextField.
    * @override
    */
   @Override
-  public Page<CommentDto> search(String text, List<String> fields, PageRequest pageRequest) {
+  public Page<CommentDto> search(String text, List<String> fields, Pageable pageable) {
     List<String> searchableFields =
         ReflectionUtil.getAnnotatedFieldNames(Comment.class, FullTextField.class);
 
@@ -141,7 +141,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     Page<Comment> commentPage =
-        commentRepository.searchBy(text, pageRequest, fieldsToSearchBy.toArray(new String[0]));
+        commentRepository.searchBy(text, pageable, fieldsToSearchBy.toArray(new String[0]));
     return commentPage.map(commentMapper::toCommentDto);
   }
 
@@ -149,15 +149,15 @@ public class CommentServiceImpl implements CommentService {
    * This method reads all comments that match the provided filter.
    *
    * @param commentsFilter The filter to apply when reading comments.
-   * @param pageRequest The pagination information.
+   * @param pageable       The pagination information.
    * @return A page of CommentDto objects that match the filter.
    * @override
    */
   @Override
   public Page<CommentDto> readAllWithFilter(
-      CommentsFilter commentsFilter, PageRequest pageRequest) {
+          CommentsFilter commentsFilter, Pageable pageable) {
     Specification<Comment> specification = commentSpecification.matchesFilter(commentsFilter);
-    Page<Comment> comments = commentRepository.findAll(specification, pageRequest);
+    Page<Comment> comments = commentRepository.findAll(specification, pageable);
     return comments.map(commentMapper::toCommentDto);
   }
 

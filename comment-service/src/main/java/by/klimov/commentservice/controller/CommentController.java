@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,20 +31,15 @@ public class CommentController {
   }
 
   @GetMapping
-  public ResponseEntity<Page<CommentDto>> getAll(
-      @RequestParam(name = "page_number") Integer pageNumber,
-      @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
-    Page<CommentDto> commentDtoPage = commentService.readAll(PageRequest.of(pageNumber, pageSize));
+  public ResponseEntity<Page<CommentDto>> getAll(@PageableDefault(size = 15) Pageable pageable) {
+    Page<CommentDto> commentDtoPage = commentService.readAll(pageable);
     return ResponseEntity.ok(commentDtoPage);
   }
 
   @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Page<CommentDto>> getAllWithFilter(
-      @RequestParam(name = "page_number") Integer pageNumber,
-      @RequestParam(name = "page_size", defaultValue = "15", required = false) Integer pageSize,
-      @RequestBody CommentsFilter commentsFilter) {
-    Page<CommentDto> commentDtoPage =
-        commentService.readAllWithFilter(commentsFilter, PageRequest.of(pageNumber, pageSize));
+      @PageableDefault(size = 15) Pageable pageable, @RequestBody CommentsFilter commentsFilter) {
+    Page<CommentDto> commentDtoPage = commentService.readAllWithFilter(commentsFilter, pageable);
     return ResponseEntity.ok(commentDtoPage);
   }
 
@@ -57,10 +53,8 @@ public class CommentController {
   public ResponseEntity<Page<CommentDto>> search(
       @RequestParam String text,
       @RequestParam List<String> fields,
-      @RequestParam(name = "page_number") Integer pageNumber,
-      @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
-    return ResponseEntity.ok(
-        commentService.search(text, fields, PageRequest.of(pageNumber, pageSize)));
+      @PageableDefault(size = 15) Pageable pageable) {
+    return ResponseEntity.ok(commentService.search(text, fields, pageable));
   }
 
   @GetMapping("/{id}")

@@ -3,8 +3,8 @@ package by.klimov.commentservice.controller;
 import static by.klimov.commentservice.data.CommentTestData.PAGE_NUMBER;
 import static by.klimov.commentservice.data.CommentTestData.PAGE_REQUEST;
 import static by.klimov.commentservice.data.CommentTestData.PAGE_SIZE;
-import static by.klimov.commentservice.data.CommentTestData.PARAM_NAME_PAGE_NUMBER;
-import static by.klimov.commentservice.data.CommentTestData.PARAM_NAME_PAGE_SIZE;
+import static by.klimov.commentservice.data.CommentTestData.PARAM_NAME_PAGE;
+import static by.klimov.commentservice.data.CommentTestData.PARAM_NAME_SIZE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -93,18 +93,18 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
 
     MockHttpServletRequestBuilder requestBuilder =
         get(BASE_REQUEST_MAPPING)
-            .param(PARAM_NAME_PAGE_NUMBER, String.valueOf(PAGE_NUMBER))
-            .param(PARAM_NAME_PAGE_SIZE, String.valueOf(PAGE_SIZE));
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_SIZE, PAGE_SIZE);
+            .param(PARAM_NAME_PAGE, String.valueOf(PAGE_NUMBER))
+            .param(PARAM_NAME_SIZE, String.valueOf(PAGE_SIZE));
+    requestBuilder.requestAttr(PARAM_NAME_PAGE, PAGE_NUMBER);
+    requestBuilder.requestAttr(PARAM_NAME_SIZE, PAGE_SIZE);
 
     // when
     mockMvc
         .perform(requestBuilder)
         .andExpect(status().is2xxSuccessful())
         .andExpect(content().contentType(APPLICATION_JSON_VALUE))
-        .andExpect(request().attribute(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER))
-        .andExpect(request().attribute(PARAM_NAME_PAGE_SIZE, PAGE_SIZE));
+        .andExpect(request().attribute(PARAM_NAME_PAGE, PAGE_NUMBER))
+        .andExpect(request().attribute(PARAM_NAME_SIZE, PAGE_SIZE));
 
     // then
     // asserts in bock "when"
@@ -182,11 +182,11 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
     MockHttpServletRequestBuilder requestBuilder =
         post(BASE_REQUEST_MAPPING + "/filter")
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-            .param(PARAM_NAME_PAGE_NUMBER, String.valueOf(PAGE_NUMBER))
-            .param(PARAM_NAME_PAGE_SIZE, String.valueOf(PAGE_SIZE))
+            .param(PARAM_NAME_PAGE, String.valueOf(PAGE_NUMBER))
+            .param(PARAM_NAME_SIZE, String.valueOf(PAGE_SIZE))
             .content(jsonCommentFilterForId);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_SIZE, PAGE_SIZE);
+    requestBuilder.requestAttr(PARAM_NAME_PAGE, PAGE_NUMBER);
+    requestBuilder.requestAttr(PARAM_NAME_SIZE, PAGE_SIZE);
 
     // when
     MvcResult mvcResult =
@@ -194,8 +194,8 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
             .perform(requestBuilder)
             .andExpect(status().is2xxSuccessful())
             .andExpect(content().contentType(APPLICATION_JSON_VALUE))
-            .andExpect(request().attribute(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER))
-            .andExpect(request().attribute(PARAM_NAME_PAGE_SIZE, PAGE_SIZE))
+            .andExpect(request().attribute(PARAM_NAME_PAGE, PAGE_NUMBER))
+            .andExpect(request().attribute(PARAM_NAME_SIZE, PAGE_SIZE))
             .andReturn();
     String jsonAnswer = mvcResult.getResponse().getContentAsString();
     Page<CommentDto> actual = getCommentDtosPage(jsonAnswer);
@@ -221,8 +221,8 @@ class CommentControllerTest extends PostgresSqlContainerInitializer {
         post(BASE_REQUEST_MAPPING + "/delete")
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
             .content(jsonCommentFilterForId);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_SIZE, PAGE_SIZE);
+    requestBuilder.requestAttr(PARAM_NAME_PAGE, PAGE_NUMBER);
+    requestBuilder.requestAttr(PARAM_NAME_SIZE, PAGE_SIZE);
 
     // when
     mockMvc.perform(requestBuilder).andExpect(status().is2xxSuccessful());
