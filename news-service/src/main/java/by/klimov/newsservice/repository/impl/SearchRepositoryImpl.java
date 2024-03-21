@@ -9,7 +9,7 @@ import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,14 +27,14 @@ public class SearchRepositoryImpl<T, ID extends Serializable> extends SimpleJpaR
   }
 
   @Override
-  public Page<T> searchBy(String text, PageRequest pageRequest, String... fields) {
+  public Page<T> searchBy(String text, Pageable pageable, String... fields) {
     SearchResult<T> result =
         getSearchResult(
-            text, Math.toIntExact(pageRequest.getOffset()), pageRequest.getPageSize(), fields);
+            text, Math.toIntExact(pageable.getOffset()), pageable.getPageSize(), fields);
 
     List<T> hits = result.hits();
 
-    return new PageImpl<>(hits, pageRequest, result.total().hitCount());
+    return new PageImpl<>(hits, pageable, result.total().hitCount());
   }
 
   private SearchResult<T> getSearchResult(

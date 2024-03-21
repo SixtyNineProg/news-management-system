@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -91,7 +91,7 @@ public class FeignCommentService implements CommentService {
   /**
    * Retrieves a page of comments that match the provided filter.
    *
-   * @param pageRequest The pagination and sorting details for the comments.
+   * @param pageable The pagination and sorting details for the comments.
    * @param commentsFilter The filter to apply when retrieving the comments.
    * @return A paginated list of CommentDto objects that match the filter.
    * @throws CommentServiceException If there is an issue with the response entity or if the
@@ -99,10 +99,10 @@ public class FeignCommentService implements CommentService {
    */
   @Override
   public Page<CommentDto> getCommentDtoPageWithFilter(
-      PageRequest pageRequest, CommentsFilter commentsFilter) {
+      Pageable pageable, CommentsFilter commentsFilter) {
     ResponseEntity<Page<CommentDto>> responseEntity =
         commentFeign.getAllWithFilter(
-            pageRequest.getPageNumber(), pageRequest.getPageSize(), commentsFilter);
+            pageable.getPageNumber(), pageable.getPageSize(), commentsFilter);
 
     if (Objects.isNull(responseEntity)) {
       throw new CommentServiceException(RESPONSE_ENTITY_IS_EMPTY);

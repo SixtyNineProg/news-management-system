@@ -15,7 +15,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,13 +111,13 @@ public class NewsServiceImpl implements NewsService {
   /**
    * Retrieves all news items and their comments in a paginated format.
    *
-   * @param pageRequest The pagination and sorting details for the news items.
+   * @param pageable The pagination and sorting details for the news items.
    * @param commentsPageSize The size of the page for comments.
    * @return A paginated list of news items and their comments.
    */
   @Override
-  public Page<NewsDto> readAll(PageRequest pageRequest, Integer commentsPageSize) {
-    Page<News> newsPage = newsRepository.findAll(pageRequest);
+  public Page<NewsDto> readAll(Pageable pageable, Integer commentsPageSize) {
+    Page<News> newsPage = newsRepository.findAll(pageable);
     Page<NewsDto> newsDtoPage = newsPage.map(newsMapper::toDto);
     List<NewsDto> newsDtos = newsDtoPage.getContent();
     newsDtos.forEach(
@@ -131,13 +131,13 @@ public class NewsServiceImpl implements NewsService {
   /**
    * Retrieves all comments for a specific news item in a paginated format.
    *
-   * @param newsId The ID of the news item for which comments are to be retrieved.
-   * @param pageRequest The pagination and sorting details for the comments.
+   * @param newsId   The ID of the news item for which comments are to be retrieved.
+   * @param pageable The pagination and sorting details for the comments.
    * @return A paginated list of comments for the specified news item.
    */
   @Override
-  public Page<CommentDto> readCommentsByNewsId(Integer newsId, PageRequest pageRequest) {
-    return commentService.getCommentDtoPageWithFilter(pageRequest, new CommentsFilter(newsId));
+  public Page<CommentDto> readCommentsByNewsId(Integer newsId, Pageable pageable) {
+    return commentService.getCommentDtoPageWithFilter(pageable, new CommentsFilter(newsId));
   }
 
   /**
@@ -168,17 +168,17 @@ public class NewsServiceImpl implements NewsService {
    * Searches for news items based on the provided text and fields, and returns them along with
    * their comments in a paginated format.
    *
-   * @param text The text to search for in the news items.
-   * @param fields The fields in the news items to search by. If empty, all searchable fields are
-   *     used.
-   * @param pageRequest The pagination and sorting details for the news items.
+   * @param text             The text to search for in the news items.
+   * @param fields           The fields in the news items to search by. If empty, all searchable fields are
+   *                         used.
+   * @param pageable         The pagination and sorting details for the news items.
    * @param commentsPageSize The size of the page for comments.
    * @return A paginated list of news items and their comments that match the search criteria.
    * @throws IllegalArgumentException If any of the provided fields to search by are not searchable.
    */
   @Override
   public Page<NewsDto> search(
-      String text, List<String> fields, PageRequest pageRequest, Integer commentsPageSize) {
+          String text, List<String> fields, Pageable pageable, Integer commentsPageSize) {
     List<String> searchableFields =
         ReflectionUtil.getAnnotatedFieldNames(News.class, FullTextField.class);
 
@@ -192,7 +192,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     Page<News> newsPage =
-        newsRepository.searchBy(text, pageRequest, fieldsToSearchBy.toArray(new String[0]));
+        newsRepository.searchBy(text, pageable, fieldsToSearchBy.toArray(new String[0]));
     Page<NewsDto> newsDtoPage = newsPage.map(newsMapper::toDto);
     List<NewsDto> newsDtos = newsDtoPage.getContent();
     newsDtos.forEach(

@@ -6,8 +6,8 @@ import static by.klimov.newsservice.data.NewsTestData.PAGE_REQUEST;
 import static by.klimov.newsservice.data.NewsTestData.PAGE_SIZE;
 import static by.klimov.newsservice.data.NewsTestData.PARAM_NAME_COMMENTS_PAGE_SIZE;
 import static by.klimov.newsservice.data.NewsTestData.PARAM_NAME_FIELDS;
-import static by.klimov.newsservice.data.NewsTestData.PARAM_NAME_PAGE_NUMBER;
-import static by.klimov.newsservice.data.NewsTestData.PARAM_NAME_PAGE_SIZE;
+import static by.klimov.newsservice.data.NewsTestData.PARAM_NAME_PAGE;
+import static by.klimov.newsservice.data.NewsTestData.PARAM_NAME_SIZE;
 import static by.klimov.newsservice.data.NewsTestData.PARAM_NAME_TEXT;
 import static by.klimov.newsservice.data.NewsTestData.SEARCHABLE_FILED;
 import static by.klimov.newsservice.data.NewsTestData.SEARCHABLE_FILED_LIST;
@@ -97,11 +97,11 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
 
     MockHttpServletRequestBuilder requestBuilder =
         get(BASE_REQUEST_MAPPING)
-            .param(PARAM_NAME_PAGE_NUMBER, String.valueOf(PAGE_NUMBER))
-            .param(PARAM_NAME_PAGE_SIZE, String.valueOf(PAGE_SIZE))
+            .param(PARAM_NAME_PAGE, String.valueOf(PAGE_NUMBER))
+            .param(PARAM_NAME_SIZE, String.valueOf(PAGE_SIZE))
             .param(PARAM_NAME_COMMENTS_PAGE_SIZE, String.valueOf(COMMENTS_PAGE_SIZE));
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_SIZE, PAGE_SIZE);
+    requestBuilder.requestAttr(PARAM_NAME_PAGE, PAGE_NUMBER);
+    requestBuilder.requestAttr(PARAM_NAME_SIZE, PAGE_SIZE);
     requestBuilder.requestAttr(PARAM_NAME_COMMENTS_PAGE_SIZE, COMMENTS_PAGE_SIZE);
 
     // when
@@ -109,8 +109,8 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
         .perform(requestBuilder)
         .andExpect(status().is2xxSuccessful())
         .andExpect(content().contentType(APPLICATION_JSON_VALUE))
-        .andExpect(request().attribute(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER))
-        .andExpect(request().attribute(PARAM_NAME_PAGE_SIZE, PAGE_SIZE))
+        .andExpect(request().attribute(PARAM_NAME_PAGE, PAGE_NUMBER))
+        .andExpect(request().attribute(PARAM_NAME_SIZE, PAGE_SIZE))
         .andExpect(request().attribute(PARAM_NAME_COMMENTS_PAGE_SIZE, COMMENTS_PAGE_SIZE));
 
     // then
@@ -129,13 +129,13 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
         get(BASE_REQUEST_MAPPING + "/search")
             .param(PARAM_NAME_TEXT, SEARCH_TEXT)
             .param(PARAM_NAME_FIELDS, SEARCHABLE_FILED)
-            .param(PARAM_NAME_PAGE_NUMBER, String.valueOf(PAGE_NUMBER))
-            .param(PARAM_NAME_PAGE_SIZE, String.valueOf(PAGE_SIZE))
+            .param(PARAM_NAME_PAGE, String.valueOf(PAGE_NUMBER))
+            .param(PARAM_NAME_SIZE, String.valueOf(PAGE_SIZE))
             .param(PARAM_NAME_COMMENTS_PAGE_SIZE, String.valueOf(COMMENTS_PAGE_SIZE));
     requestBuilder.requestAttr(PARAM_NAME_TEXT, SEARCH_TEXT);
     requestBuilder.requestAttr(PARAM_NAME_FIELDS, SEARCHABLE_FILED);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_SIZE, PAGE_SIZE);
+    requestBuilder.requestAttr(PARAM_NAME_PAGE, PAGE_NUMBER);
+    requestBuilder.requestAttr(PARAM_NAME_SIZE, PAGE_SIZE);
     requestBuilder.requestAttr(PARAM_NAME_COMMENTS_PAGE_SIZE, COMMENTS_PAGE_SIZE);
 
     // when
@@ -145,8 +145,8 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
         .andExpect(content().contentType(APPLICATION_JSON_VALUE))
         .andExpect(request().attribute(PARAM_NAME_TEXT, SEARCH_TEXT))
         .andExpect(request().attribute(PARAM_NAME_FIELDS, SEARCHABLE_FILED))
-        .andExpect(request().attribute(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER))
-        .andExpect(request().attribute(PARAM_NAME_PAGE_SIZE, PAGE_SIZE))
+        .andExpect(request().attribute(PARAM_NAME_PAGE, PAGE_NUMBER))
+        .andExpect(request().attribute(PARAM_NAME_SIZE, PAGE_SIZE))
         .andExpect(request().attribute(PARAM_NAME_COMMENTS_PAGE_SIZE, COMMENTS_PAGE_SIZE));
 
     // then
@@ -195,10 +195,10 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
 
     MockHttpServletRequestBuilder requestBuilder =
         get(BASE_REQUEST_MAPPING + "/{id}/comments", id)
-            .param(PARAM_NAME_PAGE_NUMBER, String.valueOf(PAGE_NUMBER))
-            .param(PARAM_NAME_PAGE_SIZE, String.valueOf(PAGE_SIZE));
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER);
-    requestBuilder.requestAttr(PARAM_NAME_PAGE_SIZE, PAGE_SIZE);
+            .param(PARAM_NAME_PAGE, String.valueOf(PAGE_NUMBER))
+            .param(PARAM_NAME_SIZE, String.valueOf(PAGE_SIZE));
+    requestBuilder.requestAttr(PARAM_NAME_PAGE, PAGE_NUMBER);
+    requestBuilder.requestAttr(PARAM_NAME_SIZE, PAGE_SIZE);
 
     // when
     MvcResult mvcResult =
@@ -206,8 +206,8 @@ public class NewsControllerTest extends PostgresSqlContainerInitializer {
             .perform(requestBuilder)
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$.content[0].id").value(id.toString()))
-            .andExpect(request().attribute(PARAM_NAME_PAGE_NUMBER, PAGE_NUMBER))
-            .andExpect(request().attribute(PARAM_NAME_PAGE_SIZE, PAGE_SIZE))
+            .andExpect(request().attribute(PARAM_NAME_PAGE, PAGE_NUMBER))
+            .andExpect(request().attribute(PARAM_NAME_SIZE, PAGE_SIZE))
             .andReturn();
     String jsonAnswer = mvcResult.getResponse().getContentAsString();
     Page<NewsDto> actual = getCommentDtosPage(jsonAnswer);

@@ -6,7 +6,8 @@ import by.klimov.newsservice.service.NewsService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +30,10 @@ public class NewsController {
 
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<Page<NewsDto>> getAll(
-      @RequestParam(name = "page_number") Integer pageNumber,
-      @RequestParam(name = "page_size", defaultValue = "15", required = false) Integer pageSize,
+      @PageableDefault(size = 15) Pageable pageable,
       @RequestParam(name = "comments_page_size", defaultValue = "15", required = false)
           Integer commentsPageSize) {
-    Page<NewsDto> newsDtoPage =
-        newsService.readAll(PageRequest.of(pageNumber, pageSize), commentsPageSize);
+    Page<NewsDto> newsDtoPage = newsService.readAll(pageable, commentsPageSize);
     return ResponseEntity.ok(newsDtoPage);
   }
 
@@ -42,12 +41,10 @@ public class NewsController {
   public ResponseEntity<Page<NewsDto>> search(
       @RequestParam String text,
       @RequestParam List<String> fields,
-      @RequestParam(name = "page_number") Integer pageNumber,
-      @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize,
+      @PageableDefault(size = 15) Pageable pageable,
       @RequestParam(name = "comments_page_size", defaultValue = "15", required = false)
           Integer commentsPageSize) {
-    return ResponseEntity.ok(
-        newsService.search(text, fields, PageRequest.of(pageNumber, pageSize), commentsPageSize));
+    return ResponseEntity.ok(newsService.search(text, fields, pageable, commentsPageSize));
   }
 
   @GetMapping("/{id}")
@@ -61,11 +58,8 @@ public class NewsController {
 
   @GetMapping("/{id}/comments")
   public ResponseEntity<Page<CommentDto>> getCommentsByNewsId(
-      @PathVariable Integer id,
-      @RequestParam(name = "page_number") Integer pageNumber,
-      @RequestParam(name = "page_size", defaultValue = "15") Integer pageSize) {
-    Page<CommentDto> commentDtoPage =
-        newsService.readCommentsByNewsId(id, PageRequest.of(pageNumber, pageSize));
+      @PathVariable Integer id, @PageableDefault(size = 15) Pageable pageable) {
+    Page<CommentDto> commentDtoPage = newsService.readCommentsByNewsId(id, pageable);
     return ResponseEntity.ok(commentDtoPage);
   }
 

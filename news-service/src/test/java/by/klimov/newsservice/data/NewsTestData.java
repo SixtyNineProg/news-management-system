@@ -26,8 +26,8 @@ public class NewsTestData {
 
   public static final long TEST_MILLIS = 1705953644075L;
 
-  public static final String PARAM_NAME_PAGE_NUMBER = "page_number";
-  public static final String PARAM_NAME_PAGE_SIZE = "page_size";
+  public static final String PARAM_NAME_PAGE = "page";
+  public static final String PARAM_NAME_SIZE = "size";
 
   public static final Integer PAGE_NUMBER = 1;
   public static final Integer PAGE_SIZE = 4;
