@@ -1,0 +1,149 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-news-table
+      author: Klimov Dmitry
+      preConditions:
+        - sqlCheck:
+            expectedResult: 0
+            sql: 'SELECT COUNT(*) FROM news'
+      changes:
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "1" }
+              - column: { name: time, value: "2024-06-01T01:56:14" }
+              - column: { name: title, value: "Future Tech: New Horizons" }
+              - column: { name: text, value: "An overview of the latest achievements in technology and their potential impact on our future." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "2" }
+              - column: { name: time, value: "2024-06-02T01:56:14" }
+              - column: { name: title, value: "Health and Wellbeing: Expert Tips" }
+              - column: { name: text, value: "Tips from leading health and wellbeing experts for maintaining a healthy lifestyle." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "3" }
+              - column: { name: time, value: "2024-06-03T01:56:14" }
+              - column: { name: title, value: "Exploring the Cosmos: The Final Frontier" }
+              - column: { name: text, value: "A look at the latest news and achievements in space exploration." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "4" }
+              - column: { name: time, value: "2024-06-04T01:56:14" }
+              - column: { name: title, value: "Artificial Intelligence: The Next Big Thing" }
+              - column: { name: text, value: "Exploring the advancements and potential of artificial intelligence in various fields." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "5" }
+              - column: { name: time, value: "2024-06-05T01:56:14" }
+              - column: { name: title, value: "Climate Change: A Global Concern" }
+              - column: { name: text, value: "Understanding the impacts of climate change and the steps towards a sustainable future." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "6" }
+              - column: { name: time, value: "2024-06-06T01:56:14" }
+              - column: { name: title, value: "The World of Virtual Reality" }
+              - column: { name: text, value: "Diving into the immersive and interactive world of virtual reality." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "7" }
+              - column: { name: time, value: "2024-06-07T01:56:14" }
+              - column: { name: title, value: "The Rise of Electric Vehicles" }
+              - column: { name: text, value: "The revolution of transportation with the rise of electric vehicles." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "8" }
+              - column: { name: time, value: "2024-06-08T01:56:14" }
+              - column: { name: title, value: "The Power of Renewable Energy" }
+              - column: { name: text, value: "Harnessing the power of renewable energy for a sustainable future." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "9" }
+              - column: { name: time, value: "2024-06-09T01:56:14" }
+              - column: { name: title, value: "The Impact of Social Media" }
+              - column: { name: text, value: "Exploring the influence and impact of social media on society." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "10" }
+              - column: { name: time, value: "2024-06-10T01:56:14" }
+              - column: { name: title, value: "The Evolution of E-commerce" }
+              - column: { name: text, value: "Understanding the growth and evolution of e-commerce in the digital age." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "11" }
+              - column: { name: time, value: "2024-06-11T01:56:14" }
+              - column: { name: title, value: "The Marvels of Modern Medicine" }
+              - column: { name: text, value: "A look at the marvels of modern medicine and its impact on healthcare." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "12" }
+              - column: { name: time, value: "2024-06-12T01:56:14" }
+              - column: { name: title, value: "The Future of Food Technology" }
+              - column: { name: text, value: "Exploring the future of food technology and its potential impact on our lives." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "13" }
+              - column: { name: time, value: "2024-06-13T01:56:14" }
+              - column: { name: title, value: "The Role of Robotics in Industry" }
+              - column: { name: text, value: "Understanding the role and impact of robotics in various industries." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "14" }
+              - column: { name: time, value: "2024-06-14T01:56:14" }
+              - column: { name: title, value: "The Magic of Movies: The Film Industry" }
+              - column: { name: text, value: "A look at the magic of movies and the workings of the film industry." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "15" }
+              - column: { name: time, value: "2024-06-15T01:56:14" }
+              - column: { name: title, value: "The World of Wearable Technology" }
+              - column: { name: text, value: "Exploring the world of wearable technology and its potential impact on our lives." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "16" }
+              - column: { name: time, value: "2024-06-16T01:56:14" }
+              - column: { name: title, value: "The Beauty of Biodiversity" }
+              - column: { name: text, value: "Understanding the importance and beauty of biodiversity on our planet." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "17" }
+              - column: { name: time, value: "2024-06-17T01:56:14" }
+              - column: { name: title, value: "The Exciting World of eSports" }
+              - column: { name: text, value: "A look at the exciting world of eSports and its rise in popularity." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "18" }
+              - column: { name: time, value: "2024-06-18T01:56:14" }
+              - column: { name: title, value: "The Power of Personalized Medicine" }
+              - column: { name: text, value: "Exploring the power and potential of personalized medicine in healthcare." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "19" }
+              - column: { name: time, value: "2024-06-19T01:56:14" }
+              - column: { name: title, value: "The Impact of Internet of Things (IoT)" }
+              - column: { name: text, value: "Understanding the impact of the Internet of Things (IoT) on our daily lives." }
+        - insert:
+            tableName: news
+            columns:
+              - column: { name: id, value: "20" }
+              - column: { name: time, value: "2024-06-20T01:56:14" }
+              - column: { name: title, value: "The Revolution of 3D Printing" }
+              - column: { name: text, value: "A look at the revolution of 3D printing and its potential impact on various industries." }

@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: delete-news-table-is-exist
+      author: Klimov Dmitry
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: news
+      changes:
+        - delete:
+            tableName: news
+  - changeSet:
+      id: create-news-table
+      author: Klimov Dmitry
+      changes:
+        - createTable:
+            tableName: news
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: time
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: TEXT
+              - column:
+                  name: text
+                  type: TEXT
